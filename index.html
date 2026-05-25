@@ -6,7 +6,7 @@
 
 <!-- ── PRIMARY SEO ── -->
 <title>The Cost of War — U.S. Military Deaths Across Every American Conflict</title>
-<meta name="description" content="An interactive memorial dashboard honoring U.S. military deaths from the Revolutionary War through Iraq and Afghanistan. Data sourced directly from the VA and DoD. Built for Memorial Day.">
+<meta name="description" content="An interactive data dashboard covering U.S. military casualties from the Revolutionary War to Afghanistan. Built for students, researchers, veterans, and anyone who wants to understand the true cost of American wars. Data from the VA and DoD.">
 <meta name="keywords" content="US military deaths, American war casualties, Memorial Day, veterans, battle deaths by war, Civil War casualties, Vietnam War deaths, Iraq War casualties, Department of Veterans Affairs, cost of war">
 <meta name="author" content="ryandesigns.dev">
 <meta name="robots" content="index, follow">
@@ -62,21 +62,57 @@
   --navy2:#111a2e;
   --navy3:#172040;
   --red:#b22234;
-  --red-soft:#c8374a;
+  --red-soft:#d44455;
   --red-dim:rgba(178,34,52,0.2);
-  --white:#f0ece2;
-  --white2:#d8d2c4;
-  --white3:#a89e8c;
-  --white4:#6a6258;
+  --white:#f5f2ea;
+  --white2:#e0dbd0;
+  --white3:#b8b2a4;
+  --white4:#7a7468;
   --white5:#3a3530;
-  --gold:#c8a84a;
-  --gold-dim:rgba(200,168,74,0.15);
-  --border:rgba(240,236,226,0.08);
-  --border2:rgba(240,236,226,0.15);
-  --glass:rgba(255,255,255,0.04);
-  --glass2:rgba(255,255,255,0.07);
+  --gold:#d4aa50;
+  --gold2:#f0cc70;
+  --gold-dim:rgba(212,170,80,0.2);
+  --border:rgba(255,255,255,0.09);
+  --border2:rgba(255,255,255,0.18);
+  --glass:rgba(255,255,255,0.05);
+  --glass2:rgba(255,255,255,0.09);
+  --accent-blue:#4a7ab5;
+  --accent-blue-dim:rgba(74,122,181,0.15);
 }
-html{scroll-behavior:smooth;overflow-x:hidden;}
+/* ══ SEASONAL BANNER ══ */
+.seasonal-banner{
+  display:none;
+  text-align:center;
+  padding:12px 24px;
+  background:rgba(178,34,52,0.15);
+  border-bottom:0.5px solid rgba(178,34,52,0.3);
+  font-family:'Source Serif 4',serif;
+  font-size:14px;
+  letter-spacing:0.08em;
+  color:var(--white2);
+  position:relative;z-index:20;
+}
+.seasonal-banner.show{display:block;}
+.seasonal-banner span{color:var(--red-soft);margin-right:8px;}
+
+/* ══ AUDIENCE BANNER ══ */
+.audience-strip{
+  background:var(--accent-blue-dim);
+  border-top:0.5px solid rgba(74,122,181,0.25);
+  border-bottom:0.5px solid rgba(74,122,181,0.25);
+  padding:18px 24px;
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;
+  font-style:italic;
+  color:var(--white3);
+  letter-spacing:0.03em;
+}
+.audience-strip strong{
+  color:var(--white2);
+  font-style:normal;
+  font-weight:400;
+}
 body{
   background:var(--navy);
   color:var(--white);
@@ -298,12 +334,12 @@ body{
 .section.visible{opacity:1;transform:translateY(0);}
 
 .section-eyebrow{
-  font-size:12px;letter-spacing:0.2em;color:var(--gold);
+  font-size:12px;letter-spacing:0.2em;color:var(--gold2);
   text-transform:uppercase;margin-bottom:12px;
   display:flex;align-items:center;gap:12px;
   font-family:'Source Serif 4',serif;
 }
-.section-eyebrow::before{content:'';width:18px;height:0.5px;background:var(--gold);flex-shrink:0;}
+.section-eyebrow::before{content:'';width:18px;height:0.5px;background:var(--gold2);flex-shrink:0;}
 
 .section-title{
   font-family:'Playfair Display',serif;
@@ -492,11 +528,14 @@ body{
 .timeline-item.visible{opacity:1;transform:translateY(0);}
 .timeline-dot{
   position:absolute;left:-17px;top:6px;
-  width:8px;height:8px;border-radius:50%;
-  background:var(--red);border:1.5px solid var(--navy);
-  transition:box-shadow 0.4s;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--red-soft);border:2px solid var(--navy);
+  transition:box-shadow 0.4s, background 0.4s;
 }
-.timeline-item:hover .timeline-dot{box-shadow:0 0 8px rgba(178,34,52,0.5);}
+.timeline-item:hover .timeline-dot{
+  background:#e85566;
+  box-shadow:0 0 12px rgba(212,68,85,0.65);
+}
 .timeline-year{font-size:15px;color:var(--red-soft);letter-spacing:0.1em;margin-bottom:2px;font-family:'Source Serif 4',serif;}
 .timeline-name{
   font-family:'Playfair Display',serif;
@@ -513,9 +552,9 @@ body{
   font-size:14px;letter-spacing:0.04em;
   font-family:'Source Serif 4',serif;border:0.5px solid;
 }
-.stat-pill.battle{border-color:rgba(50,90,160,0.4);color:rgba(160,185,230,0.85);background:rgba(30,60,120,0.2);}
-.stat-pill.disease{border-color:rgba(160,100,40,0.4);color:rgba(210,160,90,0.85);background:rgba(120,70,20,0.15);}
-.stat-pill.cost{border-color:rgba(200,168,74,0.25);color:rgba(200,168,74,0.7);background:rgba(200,168,74,0.06);}
+.stat-pill.battle{border-color:rgba(74,122,181,0.5);color:rgba(140,180,240,0.9);background:rgba(74,122,181,0.15);}
+.stat-pill.disease{border-color:rgba(200,70,80,0.4);color:rgba(230,130,140,0.9);background:rgba(178,34,52,0.12);}
+.stat-pill.cost{border-color:rgba(212,170,80,0.35);color:rgba(212,170,80,0.85);background:rgba(212,170,80,0.08);}
 
 /* ══ TWO COL ══ */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
@@ -626,21 +665,31 @@ body{
       <ellipse cx="22" cy="54" rx="5" ry="1.5" fill="rgba(200,168,74,0.12)"/>
     </svg>
     <div class="hero-rule"></div>
-    <p class="hero-eyebrow">Memorial Day &middot; In honor of the fallen</p>
+    <p class="hero-eyebrow">American Military History &middot; By the Numbers</p>
     <h1 class="hero-title">The <em>human cost</em><br>of America's wars</h1>
     <div class="hero-divider"></div>
-    <p class="hero-sub">Every number on this page was a person — a son, a daughter, a parent, a neighbor.</p>
-    <p style="font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--white2);max-width:520px;margin:0 auto 20px;line-height:1.85;opacity:0;animation:fadeUp 1.2s ease 1.4s both;">
-      Memorial Day exists so we don't forget. This page was built to put the numbers in context — not just how many were lost, but what that loss actually meant relative to the country they were fighting for. The data comes directly from the U.S. Department of Veterans Affairs and the Department of Defense. The least we can do is look at it honestly.
+    <p class="hero-sub">These conflicts shaped the country we live in. Behind every statistic is a person who never came home.</p>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--white2);max-width:560px;margin:0 auto 20px;line-height:1.9;opacity:0;animation:fadeUp 1.2s ease 1.4s both;">
+      This page was built to put the numbers in context — not just how many were lost, but what that loss actually meant relative to the country they were fighting for. The data comes directly from the U.S. Department of Veterans Affairs and the Department of Defense. The least we can do is look at it honestly.
     </p>
     <p class="hero-source">Data sourced from the U.S. Department of Veterans Affairs &middot; department.va.gov/americas-wars</p>
-    <p id="lastUpdated" style="font-size:10px;letter-spacing:0.1em;color:var(--white5);margin-top:10px;opacity:0;transition:opacity 0.8s ease;font-family:'Source Serif 4',serif;"></p>
+    <p id="lastUpdated" style="font-size:13px;letter-spacing:0.08em;color:var(--white4);margin-top:10px;opacity:0;transition:opacity 0.8s ease;font-family:'Source Serif 4',serif;"></p>
   </div>
   <div class="scroll-hint" onclick="document.getElementById('overview').scrollIntoView({behavior:'smooth'})">
     <div class="scroll-line"></div>
     <span class="scroll-text">Scroll to explore</span>
   </div>
 </section>
+
+<!-- SEASONAL MEMORIAL DAY BANNER — shown only around Memorial Day -->
+<div class="seasonal-banner" id="seasonalBanner">
+  <span>&#9890;</span> Today is Memorial Day — we honor all who gave their lives in service to this country.
+</div>
+
+<!-- AUDIENCE STRIP -->
+<div class="audience-strip">
+  For <strong>students, researchers, veterans, families,</strong> and anyone who wants to understand the true price of American military history.
+</div>
 
 <!-- FLAG STRIPE DIVIDER 1 -->
 <div class="flag-divider" id="fd1">
@@ -749,8 +798,8 @@ body{
         <canvas id="causeChart" role="img" aria-label="Cause of death by war — battle vs disease">Battle deaths vs disease deaths across major American conflicts.</canvas>
       </div>
       <div class="legend">
-        <div class="legend-item"><div class="legend-swatch" style="background:rgba(50,90,160,0.8);"></div>Battle deaths</div>
-        <div class="legend-item"><div class="legend-swatch" style="background:rgba(160,70,30,0.8);"></div>Disease / other causes</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(74,122,181,0.85);"></div>Battle deaths</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(178,34,52,0.75);"></div>Disease / other causes</div>
       </div>
     </div>
     <div class="timeline" id="causeTimeline"></div>
@@ -1096,17 +1145,18 @@ let causeInst=null,causeDone=false;
 function buildCauseChart(){
   if(causeDone)return;causeDone=true;
   const gc='rgba(255,255,255,0.05)',tc='rgba(168,158,140,0.8)';
+  const gc='rgba(255,255,255,0.07)',tc='rgba(184,178,164,0.9)';
   causeInst=new Chart(document.getElementById('causeChart'),{
     type:'bar',
     data:{labels:causeWars.map(w=>w.name),datasets:[
-      {label:'Battle deaths',data:causeWars.map(w=>w.battle),backgroundColor:'rgba(50,90,160,0.72)',borderWidth:0,borderRadius:2},
-      {label:'Disease / other',data:causeWars.map(w=>w.disease),backgroundColor:'rgba(160,70,30,0.68)',borderWidth:0,borderRadius:2}
+      {label:'Battle deaths',data:causeWars.map(w=>w.battle),backgroundColor:'rgba(74,122,181,0.78)',borderWidth:0,borderRadius:3},
+      {label:'Disease / other',data:causeWars.map(w=>w.disease),backgroundColor:'rgba(178,34,52,0.68)',borderWidth:0,borderRadius:3}
     ]},
     options:{responsive:true,maintainAspectRatio:false,
       animation:{duration:1400,easing:'easeOutQuart'},
-      plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(11,17,32,0.94)',titleColor:'#f0ece2',bodyColor:'rgba(168,158,140,0.9)',borderColor:'rgba(255,255,255,0.08)',borderWidth:1}},
-      scales:{x:{stacked:true,grid:{color:gc},ticks:{color:tc,font:{size:10}}},
-        y:{stacked:true,grid:{color:gc},ticks:{color:tc,font:{size:10},callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v}}}}
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(11,17,32,0.96)',titleColor:'#f5f2ea',bodyColor:'rgba(184,178,164,0.95)',borderColor:'rgba(255,255,255,0.12)',borderWidth:1}},
+      scales:{x:{stacked:true,grid:{color:gc},ticks:{color:tc,font:{size:13}}},
+        y:{stacked:true,grid:{color:gc},ticks:{color:tc,font:{size:13},callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v}}}}
   });
 }
 function setChart(mode,btn){
@@ -1178,6 +1228,22 @@ function buildTable(){
 // This ensures every chart and table uses live data from the file.
 async function init(){
   await loadData();
+
+  // Show seasonal banner around Memorial Day (last Mon of May ± 2 days)
+  const now = new Date();
+  const month = now.getMonth(); // 4 = May
+  const day = now.getDate();
+  if(month === 4){
+    // Find last Monday of May
+    const lastDay = new Date(now.getFullYear(), 5, 0).getDate();
+    let lastMonday = lastDay;
+    const lastDayOfMonth = new Date(now.getFullYear(), 4, lastDay);
+    while(lastDayOfMonth.getDay() !== 1){ lastDayOfMonth.setDate(lastDayOfMonth.getDate()-1); }
+    const memDay = lastDayOfMonth.getDate();
+    if(day >= memDay - 2 && day <= memDay + 1){
+      document.getElementById('seasonalBanner').classList.add('show');
+    }
+  }
 
   // Stars
   resizeS();
