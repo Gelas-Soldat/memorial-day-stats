@@ -251,7 +251,9 @@ body{
   font-weight:400;color:var(--white);
   line-height:1.12;margin-bottom:18px;
   letter-spacing:-0.01em;
-  opacity:1;animation:fadeUp 1.2s ease 0s both;
+  /* NO animation — this is the LCP element. animation-fill-mode:both would
+     apply opacity:0 from the keyframe start, hiding it from Lighthouse's
+     LCP scanner. Must be fully visible with zero CSS interference. */
 }
 .hero-title em{font-style:italic;color:var(--white2);}
 .hero-divider{
