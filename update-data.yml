@@ -1,0 +1,55 @@
+# .github/workflows/update-data.yml
+#
+# Runs the data scraper every Monday at 8am UTC.
+# Also runs whenever you push to main (so you can test it immediately).
+# If the scraper updates data.json, this workflow commits and pushes it
+# back to the repo automatically.
+
+name: Update casualty data
+
+on:
+  schedule:
+    # Every Monday at 8:00 AM UTC
+    - cron: "0 8 * * 1"
+
+  # Also run whenever you push — useful for testing
+  push:
+    branches:
+      - main
+
+  # Let you trigger it manually from the GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  scrape-and-update:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # needed so the action can commit back to the repo
+
+    steps:
+      # 1. Check out your repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2. Set up Python (no extra packages needed — scraper uses stdlib only)
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # 3. Run the scraper
+      - name: Run data scraper
+        run: python scripts/scrape_data.py
+
+      # 4. If data.json changed, commit and push it back
+      - name: Commit updated data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          # Only commit if there's actually something to commit
+          git diff --staged --quiet || git commit -m "chore: update casualty data [$(date -u '+%Y-%m-%d')]"
+          git push

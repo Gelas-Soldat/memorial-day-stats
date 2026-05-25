@@ -1,0 +1,145 @@
+{
+  "meta": {
+    "last_updated": "2026-05-24",
+    "source": "U.S. Department of Veterans Affairs — Americas Wars fact sheet",
+    "source_url": "https://department.va.gov/americas-wars/",
+    "dcas_url": "https://dcas.dmdc.osd.mil/dcas/app/summaryData/deaths/byWar",
+    "note": "Historical figures from VA. Post-1980 active-duty deaths from DoD DCAS."
+  },
+  "summary": {
+    "total_battle_deaths": 666447,
+    "deadliest_single_day": 3654,
+    "deadliest_single_day_label": "Battle of Antietam, Sept. 17, 1862",
+    "civil_war_pct_of_population": 2,
+    "post_911_veteran_suicides": 30000
+  },
+  "wars": [
+    {
+      "name": "Rev. War",
+      "full": "American Revolutionary War",
+      "years": "1775–1783",
+      "days": 2922,
+      "service": "217,000",
+      "battle": 4435,
+      "other": 17000,
+      "wounded": 6188,
+      "popPct": 0.177,
+      "color": "rgba(50,90,160,0.7)"
+    },
+    {
+      "name": "1812",
+      "full": "War of 1812",
+      "years": "1812–1815",
+      "days": 1095,
+      "service": "286,730",
+      "battle": 2260,
+      "other": 15000,
+      "wounded": 4505,
+      "popPct": 0.029,
+      "color": "rgba(50,90,160,0.6)"
+    },
+    {
+      "name": "Mexican",
+      "full": "Mexican-American War",
+      "years": "1846–1848",
+      "days": 730,
+      "service": "78,718",
+      "battle": 1733,
+      "other": 11550,
+      "wounded": 4152,
+      "popPct": 0.008,
+      "color": "rgba(50,90,160,0.5)"
+    },
+    {
+      "name": "Civil War",
+      "full": "American Civil War",
+      "years": "1861–1865",
+      "days": 1461,
+      "service": "3,263,363",
+      "battle": 214938,
+      "other": 359394,
+      "wounded": 281881,
+      "popPct": 0.453,
+      "color": "rgba(178,34,52,0.82)"
+    },
+    {
+      "name": "WWI",
+      "full": "World War I",
+      "years": "1917–1918",
+      "days": 584,
+      "service": "4,734,991",
+      "battle": 53402,
+      "other": 63114,
+      "wounded": 204002,
+      "popPct": 0.052,
+      "color": "rgba(90,120,175,0.7)"
+    },
+    {
+      "name": "WWII",
+      "full": "World War II",
+      "years": "1941–1945",
+      "days": 1365,
+      "service": "16,112,566",
+      "battle": 291557,
+      "other": 113842,
+      "wounded": 671846,
+      "popPct": 0.219,
+      "color": "rgba(110,140,190,0.75)"
+    },
+    {
+      "name": "Korea",
+      "full": "Korean War",
+      "years": "1950–1953",
+      "days": 1128,
+      "service": "5,720,000",
+      "battle": 33686,
+      "other": 2830,
+      "wounded": 103284,
+      "popPct": 0.022,
+      "color": "rgba(75,105,155,0.65)"
+    },
+    {
+      "name": "Vietnam",
+      "full": "Vietnam War",
+      "years": "1964–1975",
+      "days": 3987,
+      "service": "8,744,000",
+      "battle": 47434,
+      "other": 10786,
+      "wounded": 153303,
+      "popPct": 0.024,
+      "color": "rgba(65,95,145,0.6)"
+    },
+    {
+      "name": "Iraq/Afghan",
+      "full": "Iraq & Afghanistan",
+      "years": "2001–present",
+      "days": 7300,
+      "service": "3,500,000+",
+      "battle": 7057,
+      "other": 1300,
+      "wounded": 53174,
+      "popPct": 0.0025,
+      "color": "rgba(55,85,135,0.55)"
+    }
+  ],
+  "cause_breakdown": [
+    { "name": "Rev. War", "battle": 4435, "disease": 17000 },
+    { "name": "Civil War", "battle": 214938, "disease": 359394 },
+    { "name": "WWI", "battle": 53402, "disease": 63114 },
+    { "name": "WWII", "battle": 291557, "disease": 113842 },
+    { "name": "Korea", "battle": 33686, "disease": 2830 },
+    { "name": "Vietnam", "battle": 47434, "disease": 10786 },
+    { "name": "Iraq/Afghan", "battle": 7057, "disease": 1300 }
+  ],
+  "cost_per_death": [
+    { "label": "Rev. War", "cost": 0.0005 },
+    { "label": "Civil War", "cost": 0.0006 },
+    { "label": "Mexican War", "cost": 0.12 },
+    { "label": "WWI", "cost": 6.3 },
+    { "label": "WWII", "cost": 14.1 },
+    { "label": "Korea", "cost": 10.1 },
+    { "label": "Vietnam", "cost": 17.8 },
+    { "label": "Iraq/Afghan", "cost": 326 }
+  ]
+}
