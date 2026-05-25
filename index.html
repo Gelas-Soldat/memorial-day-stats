@@ -292,7 +292,15 @@ body{
 }
 @keyframes breathe{0%,100%{opacity:0.3;transform:scaleY(1);}50%{opacity:1;transform:scaleY(1.12);}}
 .scroll-text{font-size:12px;letter-spacing:0.16em;color:var(--white4);text-transform:uppercase;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+/* Use transform+opacity together — both are composited, no layout reflow */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+/* Tell browser to promote animated elements to their own layer */
+.hero-eyebrow,.hero-rule,.hero-sub,.hero-divider,.hero-source,.scroll-hint,.flame-svg{
+  will-change:transform,opacity;
+}
 
 /* ══ FLAG STRIPE DIVIDER ══ */
 .flag-divider{
@@ -902,21 +910,57 @@ body{
 /* ── GLOBALS (populated after data.json loads) ── */
 let wars=[], causeWars=[], costData=[], timelineItems=[];
 
-/* ── LOAD DATA FROM data.json ── */
+/* ── INLINE DATA — embedded at build time, scraper updates data.json separately ── */
+const INLINE_DATA = {
+  "meta":{"last_updated":"2026-05-25","source":"U.S. Department of Veterans Affairs"},
+  "summary":{"total_battle_deaths":666447,"deadliest_single_day":3654,"civil_war_pct_of_population":2,"post_911_veteran_suicides":30000},
+  "wars":[
+    {name:"Rev. War",full:"American Revolutionary War",years:"1775–1783",days:2922,service:"217,000",battle:4435,other:17000,wounded:6188,popPct:0.177,color:"rgba(50,90,160,0.7)"},
+    {name:"1812",full:"War of 1812",years:"1812–1815",days:1095,service:"286,730",battle:2260,other:15000,wounded:4505,popPct:0.029,color:"rgba(50,90,160,0.6)"},
+    {name:"Mexican",full:"Mexican-American War",years:"1846–1848",days:730,service:"78,718",battle:1733,other:11550,wounded:4152,popPct:0.008,color:"rgba(50,90,160,0.5)"},
+    {name:"Civil War",full:"American Civil War",years:"1861–1865",days:1461,service:"3,263,363",battle:214938,other:359394,wounded:281881,popPct:0.453,color:"rgba(178,34,52,0.82)"},
+    {name:"WWI",full:"World War I",years:"1917–1918",days:584,service:"4,734,991",battle:53402,other:63114,wounded:204002,popPct:0.052,color:"rgba(90,120,175,0.7)"},
+    {name:"WWII",full:"World War II",years:"1941–1945",days:1365,service:"16,112,566",battle:291557,other:113842,wounded:671846,popPct:0.219,color:"rgba(110,140,190,0.75)"},
+    {name:"Korea",full:"Korean War",years:"1950–1953",days:1128,service:"5,720,000",battle:33686,other:2830,wounded:103284,popPct:0.022,color:"rgba(75,105,155,0.65)"},
+    {name:"Vietnam",full:"Vietnam War",years:"1964–1975",days:3987,service:"8,744,000",battle:47434,other:10786,wounded:153303,popPct:0.024,color:"rgba(65,95,145,0.6)"},
+    {name:"Iraq/Afghan",full:"Iraq & Afghanistan",years:"2001–present",days:7300,service:"3,500,000+",battle:7057,other:1300,wounded:53174,popPct:0.0025,color:"rgba(55,85,135,0.55)"}
+  ],
+  "cause_breakdown":[
+    {name:"Rev. War",battle:4435,disease:17000},{name:"Civil War",battle:214938,disease:359394},
+    {name:"WWI",battle:53402,disease:63114},{name:"WWII",battle:291557,disease:113842},
+    {name:"Korea",battle:33686,disease:2830},{name:"Vietnam",battle:47434,disease:10786},
+    {name:"Iraq/Afghan",battle:7057,disease:1300}
+  ],
+  "cost_per_death":[
+    {label:"Rev. War",cost:0.0005},{label:"Civil War",cost:0.0006},{label:"Mexican War",cost:0.12},
+    {label:"WWI",cost:6.3},{label:"WWII",cost:14.1},{label:"Korea",cost:10.1},
+    {label:"Vietnam",cost:17.8},{label:"Iraq/Afghan",cost:326}
+  ]
+};
+
+/* ── LOAD DATA — uses inline data instantly, then tries to fetch updates ── */
 async function loadData(){
+  // Use inline data immediately — zero network wait
+  applyData(INLINE_DATA);
+
+  // Then try to fetch latest data.json in background for any updates
   try {
-    // Resolve data.json relative to wherever index.html lives
-    const base = document.currentScript
-      ? document.currentScript.src.replace(/[^/]*$/, '')
-      : (window.location.pathname.replace(/[^/]*$/, ''));
     const dataUrl = new URL('./data.json', window.location.href).href;
     const res = await fetch(dataUrl);
-    if(!res.ok) throw new Error('data.json not found at ' + dataUrl);
-    const d = await res.json();
+    if(res.ok){
+      const d = await res.json();
+      applyData(d);
+    }
+  } catch(err) {
+    console.warn('Could not fetch data.json update:', err);
+  }
+  return true;
+}
 
-    wars = d.wars;
-    causeWars = d.cause_breakdown;
-    costData = d.cost_per_death;
+function applyData(d){
+    if(d.wars) wars = d.wars;
+    if(d.cause_breakdown) causeWars = d.cause_breakdown;
+    if(d.cost_per_death) costData = d.cost_per_death;
 
     // Timeline is editorial — kept here, but battle/disease numbers come from data
     timelineItems = [
@@ -929,12 +973,14 @@ async function loadData(){
     ];
 
     // Inject summary counters from data
-    const s = d.summary;
-    const nums = document.querySelectorAll('.counter-num');
-    if(nums[0]) nums[0].dataset.target = s.total_battle_deaths;
-    if(nums[1]) nums[1].dataset.target = s.deadliest_single_day;
-    if(nums[2]) nums[2].dataset.target = s.civil_war_pct_of_population;
-    if(nums[3]) nums[3].dataset.target = s.post_911_veteran_suicides;
+    if(d.summary){
+      const s = d.summary;
+      const nums = document.querySelectorAll('.counter-num');
+      if(nums[0]) nums[0].dataset.target = s.total_battle_deaths;
+      if(nums[1]) nums[1].dataset.target = s.deadliest_single_day;
+      if(nums[2]) nums[2].dataset.target = s.civil_war_pct_of_population;
+      if(nums[3]) nums[3].dataset.target = s.post_911_veteran_suicides;
+    }
 
     // Show last-updated badge
     const badge = document.getElementById('lastUpdated');
@@ -942,43 +988,6 @@ async function loadData(){
       badge.textContent = 'Data last updated: ' + d.meta.last_updated;
       badge.style.opacity = '1';
     }
-
-    return true;
-  } catch(err) {
-    console.warn('Could not load data.json:', err);
-    // Fallback: hardcoded values so the page never breaks
-    wars=[
-      {name:"Rev. War",full:"American Revolutionary War",years:"1775–1783",days:2922,service:"217,000",battle:4435,other:17000,wounded:6188,popPct:0.177,color:"rgba(50,90,160,0.7)"},
-      {name:"1812",full:"War of 1812",years:"1812–1815",days:1095,service:"286,730",battle:2260,other:15000,wounded:4505,popPct:0.029,color:"rgba(50,90,160,0.6)"},
-      {name:"Mexican",full:"Mexican-American War",years:"1846–1848",days:730,service:"78,718",battle:1733,other:11550,wounded:4152,popPct:0.008,color:"rgba(50,90,160,0.5)"},
-      {name:"Civil War",full:"American Civil War",years:"1861–1865",days:1461,service:"3,263,363",battle:214938,other:359394,wounded:281881,popPct:0.453,color:"rgba(178,34,52,0.82)"},
-      {name:"WWI",full:"World War I",years:"1917–1918",days:584,service:"4,734,991",battle:53402,other:63114,wounded:204002,popPct:0.052,color:"rgba(90,120,175,0.7)"},
-      {name:"WWII",full:"World War II",years:"1941–1945",days:1365,service:"16,112,566",battle:291557,other:113842,wounded:671846,popPct:0.219,color:"rgba(110,140,190,0.75)"},
-      {name:"Korea",full:"Korean War",years:"1950–1953",days:1128,service:"5,720,000",battle:33686,other:2830,wounded:103284,popPct:0.022,color:"rgba(75,105,155,0.65)"},
-      {name:"Vietnam",full:"Vietnam War",years:"1964–1975",days:3987,service:"8,744,000",battle:47434,other:10786,wounded:153303,popPct:0.024,color:"rgba(65,95,145,0.6)"},
-      {name:"Iraq/Afghan",full:"Iraq & Afghanistan",years:"2001–present",days:7300,service:"3,500,000+",battle:7057,other:1300,wounded:53174,popPct:0.0025,color:"rgba(55,85,135,0.55)"}
-    ];
-    causeWars=[
-      {name:"Rev. War",battle:4435,disease:17000},{name:"Civil War",battle:214938,disease:359394},
-      {name:"WWI",battle:53402,disease:63114},{name:"WWII",battle:291557,disease:113842},
-      {name:"Korea",battle:33686,disease:2830},{name:"Vietnam",battle:47434,disease:10786},
-      {name:"Iraq/Afghan",battle:7057,disease:1300}
-    ];
-    costData=[
-      {label:"Rev. War",cost:0.0005},{label:"Civil War",cost:0.0006},{label:"Mexican War",cost:0.12},
-      {label:"WWI",cost:6.3},{label:"WWII",cost:14.1},{label:"Korea",cost:10.1},
-      {label:"Vietnam",cost:17.8},{label:"Iraq/Afghan",cost:326}
-    ];
-    timelineItems=[
-      {year:"1775–1783",name:"Revolutionary War",note:"Disease killed four times more men than bullets. Dysentery, smallpox, and typhoid were the invisible enemy.",battle:4435,disease:17000,cost:"< $1K"},
-      {year:"1861–1865",name:"Civil War",note:"Two soldiers died from infection for every one killed in battle. Contaminated water and gangrene claimed hundreds of thousands.",battle:214938,disease:359394,cost:"< $1K"},
-      {year:"1917–1918",name:"World War I",note:"Machine guns and artillery drove battle deaths sharply up. The 1918 influenza pandemic still rivaled combat losses.",battle:53402,disease:63114,cost:"$6.3M"},
-      {year:"1941–1945",name:"World War II",note:"Penicillin reached the front lines in 1943. For the first time, battle deaths clearly outnumbered disease deaths.",battle:291557,disease:113842,cost:"$14M"},
-      {year:"1950–1975",name:"Korea & Vietnam",note:"Medevac helicopters transformed battlefield medicine. Disease deaths collapsed to a fraction of total losses.",battle:81120,disease:13616,cost:"$10–18M"},
-      {year:"2001–present",name:"Iraq & Afghanistan",note:"Body armor and rapid surgery saved lives that would have been fatal in any prior war. Yet 30,000+ veterans later died by suicide.",battle:7057,disease:1300,cost:"$326M"}
-    ];
-    return false;
-  }
 }
 
 /* ── STARS ── */
@@ -1086,22 +1095,26 @@ navDots.forEach(d=>d.addEventListener('click',()=>{
 }));
 const sIds=['hero','overview','scale','intensity','causes','cost','record'];
 
+// Cache section top positions — read once, not on every scroll event
+let sectionTops=[];
+function cacheSectionTops(){
+  sectionTops=sIds.map(id=>{
+    const el=document.getElementById(id);
+    return el ? el.getBoundingClientRect().top+window.scrollY : 0;
+  });
+}
+
 function onScroll(){
   const sy=window.scrollY;
   const maxScroll=document.body.scrollHeight-window.innerHeight;
-  const scrollPct=sy/maxScroll;
+  const scrollPct=maxScroll>0?sy/maxScroll:0;
 
-  // Progress bar
+  // Progress bar — use transform instead of width for better perf
   pBar.style.width=(scrollPct*100)+'%';
 
-  // Nav dots
+  // Nav dots — use cached positions, no getBoundingClientRect
   let active=0;
-  sIds.forEach((id,i)=>{
-    const el=document.getElementById(id);
-    if(!el)return;
-    const top=el.getBoundingClientRect().top+sy;
-    if(sy>=top-280)active=i;
-  });
+  sectionTops.forEach((top,i)=>{ if(sy>=top-280)active=i; });
   navDots.forEach((d,i)=>d.classList.toggle('active',i===active));
 
   // Flag parallax — starts fading in after hero, peaks mid-scroll, fades at end
@@ -1311,6 +1324,12 @@ async function init(){
 
   // Scroll
   window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',()=>{
+    resizeS();
+    cacheSectionTops();
+  });
+  // Cache section positions after DOM is ready
+  cacheSectionTops();
   onScroll();
 
   // Sections fade-in
