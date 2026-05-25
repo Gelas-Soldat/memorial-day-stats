@@ -638,7 +638,152 @@ body{
   margin-top:18px;font-family:var(--font-serif);
 }
 
-/* ══ TAB NAV ══ */
+/* ══ STORIES ══ */
+.stories-subhead-wrap{margin-bottom:28px;}
+.stories-subhead{
+  font-family:var(--font-serif);
+  font-size:clamp(20px,2.5vw,26px);
+  font-weight:400;color:var(--white);
+  margin-bottom:8px;
+}
+.stories-subhead-desc{
+  font-family:var(--font-serif);
+  font-size:16px;color:var(--white4);
+  font-style:italic;line-height:1.7;
+}
+
+/* Unit cards */
+.unit-grid{display:flex;flex-direction:column;gap:24px;}
+.unit-card{
+  background:var(--glass);
+  border:0.5px solid var(--border);
+  border-radius:3px;overflow:hidden;
+  display:grid;grid-template-columns:280px 1fr;
+  transition:border-color 0.3s;
+}
+.unit-card:hover{border-color:var(--border2);}
+.unit-card-img{
+  width:100%;height:100%;min-height:220px;
+  object-fit:cover;object-position:center top;
+  display:block;
+  background:var(--surface2);
+}
+.unit-card-img-placeholder{
+  width:100%;height:220px;
+  background:linear-gradient(135deg,rgba(50,90,160,0.2),rgba(139,26,52,0.2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:48px;
+}
+.unit-card-body{padding:28px;}
+.unit-card-war{
+  font-size:10px;color:var(--gold);
+  letter-spacing:0.18em;text-transform:uppercase;
+  margin-bottom:8px;font-family:var(--font-serif);
+}
+.unit-card-name{
+  font-family:var(--font-serif);
+  font-size:22px;color:var(--white);
+  margin-bottom:4px;
+}
+.unit-card-subtitle{
+  font-size:14px;color:var(--white4);
+  font-style:italic;margin-bottom:16px;
+  font-family:var(--font-serif);
+}
+.unit-card-facts{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;
+}
+.unit-fact-pill{
+  background:rgba(255,255,255,0.04);
+  border:0.5px solid var(--border);
+  border-radius:2px;padding:4px 10px;
+  font-size:12px;color:var(--white3);
+  font-family:var(--font-serif);
+}
+.unit-card-story{
+  font-family:var(--font-serif);
+  font-size:15px;color:var(--white2);
+  line-height:1.85;
+}
+.unit-card-story p{margin-bottom:0.9em;}
+.unit-card-story p:last-child{margin-bottom:0;}
+
+/* MoH grid */
+.moh-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+}
+.moh-card{
+  background:var(--glass);
+  border:0.5px solid var(--border);
+  border-radius:3px;padding:24px;
+  transition:border-color 0.3s,background 0.3s;
+  opacity:0;
+  animation:fadeUp 0.5s ease both;
+}
+.moh-card:hover{border-color:var(--border2);background:var(--glass2);}
+.moh-card.hidden{display:none;}
+.moh-photo-wrap{
+  width:80px;height:80px;border-radius:50%;
+  overflow:hidden;margin:0 auto 16px;
+  border:2px solid var(--border2);
+  background:rgba(50,90,160,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:32px;
+}
+.moh-photo{
+  width:100%;height:100%;
+  object-fit:cover;object-position:top;
+}
+.moh-war-badge{
+  display:inline-block;
+  padding:2px 10px;border-radius:2px;
+  font-size:10px;letter-spacing:0.12em;
+  text-transform:uppercase;
+  font-family:var(--font-serif);
+  margin-bottom:8px;
+}
+.moh-war-badge.civil{background:rgba(100,60,20,0.25);color:#c8843c;}
+.moh-war-badge.wwi{background:rgba(50,90,50,0.25);color:#70a870;}
+.moh-war-badge.wwii{background:rgba(139,26,26,0.25);color:var(--red-soft);}
+.moh-war-badge.korea{background:rgba(50,70,140,0.25);color:#8aabdd;}
+.moh-war-badge.vietnam{background:rgba(100,60,140,0.25);color:#b088cc;}
+.moh-war-badge.afghan{background:rgba(50,100,80,0.25);color:#72c0a0;}
+.moh-name{
+  font-family:var(--font-serif);
+  font-size:18px;color:var(--white);
+  margin-bottom:3px;text-align:center;
+}
+.moh-rank{
+  font-size:12px;color:var(--white4);
+  text-align:center;margin-bottom:4px;
+  font-family:var(--font-serif);
+}
+.moh-date{
+  font-size:12px;color:var(--red-soft);
+  text-align:center;margin-bottom:14px;
+  font-family:var(--font-serif);
+  letter-spacing:0.04em;
+}
+.moh-summary{
+  font-family:var(--font-serif);
+  font-size:14px;color:var(--white3);
+  line-height:1.75;
+}
+.moh-location{
+  font-size:11px;color:var(--white4);
+  font-style:italic;margin-top:10px;
+  font-family:var(--font-serif);
+}
+
+@media(max-width:700px){
+  .unit-card{grid-template-columns:1fr;}
+  .unit-card-img{height:200px;width:100%;}
+  .unit-card-img-placeholder{height:160px;}
+  .moh-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+}
+
 .tab-nav{
   background:rgba(11,17,32,0.92);
   backdrop-filter:blur(16px);
@@ -996,6 +1141,7 @@ body{
     <button class="tab-btn" data-tab="deepdives" onclick="switchTab('deepdives',this)">Each War</button>
     <button class="tab-btn" data-tab="onthisday" onclick="switchTab('onthisday',this)">On This Day</button>
     <button class="tab-btn" data-tab="story" onclick="switchTab('story',this)">The Story</button>
+    <button class="tab-btn" data-tab="stories" onclick="switchTab('stories',this)">Stories</button>
   </div>
 </nav>
 
@@ -1221,6 +1367,41 @@ body{
 
       <p class="story-byline">— fallen.memorial · Data sourced from the U.S. Department of Veterans Affairs and the Department of Defense</p>
     </div>
+  </div>
+</div>
+
+<!-- TAB: STORIES -->
+<div class="tab-content" id="tab-stories">
+  <div class="tab-section">
+    <p class="section-eyebrow">True Stories</p>
+    <h2 class="section-title">The people behind the numbers</h2>
+    <p class="section-desc">Behind every casualty figure is a story of extraordinary courage. These are verified accounts from official records, Medal of Honor citations, and documented military history. Photos sourced from Wikipedia and public domain archives.</p>
+
+    <div class="stories-subhead-wrap">
+      <h3 class="stories-subhead">Unit spotlights</h3>
+      <p class="stories-subhead-desc">Six units whose stories changed how America understood who could serve, who could fight, and who could be a hero.</p>
+    </div>
+    <div id="unitStoriesGrid" class="unit-grid"></div>
+
+    <div class="stories-subhead-wrap" style="margin-top:64px;">
+      <h3 class="stories-subhead">Medal of Honor recipients</h3>
+      <p class="stories-subhead-desc">The nation's highest military honor, awarded for conspicuous gallantry above and beyond the call of duty.</p>
+    </div>
+    <div class="toggle-tabs" id="mohFilter" style="margin-bottom:28px;">
+      <button class="toggle-tab active" onclick="filterMoH('all',this)">All wars</button>
+      <button class="toggle-tab" onclick="filterMoH('Civil War',this)">Civil War</button>
+      <button class="toggle-tab" onclick="filterMoH('WWI',this)">WWI</button>
+      <button class="toggle-tab" onclick="filterMoH('WWII',this)">WWII</button>
+      <button class="toggle-tab" onclick="filterMoH('Korea',this)">Korea</button>
+      <button class="toggle-tab" onclick="filterMoH('Vietnam',this)">Vietnam</button>
+      <button class="toggle-tab" onclick="filterMoH('Afghanistan',this)">Afghanistan</button>
+    </div>
+    <div id="mohGrid" class="moh-grid"></div>
+
+    <p style="font-size:13px;color:var(--white4);font-family:var(--font-serif);font-style:italic;margin-top:48px;text-align:center;line-height:1.8;">
+      Photos sourced from Wikipedia (public domain / U.S. government works). Stories drawn from Medal of Honor citations, National Archives, and verified historical records.<br>
+      The Medal of Honor has been awarded 3,527 times since the Civil War.
+    </p>
   </div>
 </div>
 
@@ -1637,10 +1818,10 @@ function switchTab(id, btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   if(btn) btn.classList.add('active');
-  // Lazy-init tab content
   if(id==='bystate' && !stateDone) buildStateBars();
   if(id==='deepdives' && !deepDone) buildDeepDives();
   if(id==='onthisday' && !otdDone) buildOnThisDay();
+  if(id==='stories' && !storiesDone) buildStories();
 }
 
 /* ── STATE DATA ── */
@@ -1920,6 +2101,237 @@ async function buildOnThisDay(){
   } catch(err){
     c.innerHTML=`<div class="otd-none">Could not load today's military history events.<br><br>Please check your connection and try again.</div>`;
   }
+}
+
+/* ── STORIES ── */
+let storiesDone = false;
+
+const unitStoriesData = [
+  {
+    name:'442nd Infantry Regiment',
+    subtitle:'"Go for Broke"',
+    war:'WWII',
+    wikiTitle:'442nd_Infantry_Regiment',
+    facts:['21 Medals of Honor','9,486 Purple Hearts','18,143 individual decorations'],
+    story:`They volunteered to fight for a country that had imprisoned their families. The 442nd Infantry Regiment — composed entirely of Japanese-American soldiers — was formed in 1943, while over 120,000 Japanese-Americans were held in internment camps across the West Coast. Most men who signed up did so knowing their parents, siblings, and children were behind barbed wire.
+
+They fought in Italy and France. Their defining hour came in October 1944 in the Vosges Mountains, where they rescued the "Lost Battalion" — 211 Texas soldiers surrounded by German forces for days, whom two previous rescue attempts had failed to reach. The 442nd broke through at a cost of over 800 casualties in a single week.
+
+By the war's end, they had become the most decorated unit for their size and length of service in U.S. military history: 21 Medals of Honor, 9,486 Purple Hearts, 18,143 individual decorations. Their motto was "Go for Broke." They proved it every day they wore the uniform.`
+  },
+  {
+    name:'Tuskegee Airmen',
+    subtitle:'332nd Fighter Group',
+    war:'WWII',
+    wikiTitle:'Tuskegee_Airmen',
+    facts:['15,000+ sorties flown','66 Distinguished Flying Crosses','96 killed in action'],
+    story:`When the Army Air Corps opened flight training to Black Americans in 1941, many expected it to fail. The program was built at Tuskegee, Alabama — in the heart of the Jim Crow South — under conditions that were meant to demonstrate that Black pilots couldn't measure up. They were wrong.
+
+The men who trained at Tuskegee flew over 15,000 sorties and 1,578 combat missions. They escorted heavy bombers deep into Germany. Sixty-six received Distinguished Flying Crosses. Ninety-six died in combat. They destroyed or damaged more than 400 enemy aircraft.
+
+When they came home, many were still forced to use separate water fountains. Their combat record helped make the case for President Truman's desegregation of the military in 1948. The Tuskegee Airmen didn't just fight Germany. They fought for the right to be seen as full Americans.`
+  },
+  {
+    name:'Harlem Hellfighters',
+    subtitle:'369th Infantry Regiment',
+    war:'WWI',
+    wikiTitle:'369th_Infantry_Regiment_(United_States)',
+    facts:['191 days in trenches','Never lost a prisoner or a foot of ground','Entire regiment awarded Croix de Guerre'],
+    story:`The U.S. Army didn't know what to do with Black soldiers in 1917. The 369th Infantry — drawn largely from Harlem — was handed over to the French, who had no such hesitations. The French needed men. They gave them weapons, rations, and respect.
+
+The 369th spent 191 continuous days in the trenches — longer than any other American unit in the war. They never lost a prisoner. They never surrendered a foot of ground. The Germans called them "Blutlustige Schwarzmänner" — the bloodthirsty Black men. The French awarded the entire regiment the Croix de Guerre.
+
+Private Henry Johnson became a legend. Alone on night sentry duty, he fought off a German raiding party of more than a dozen men — with a jammed rifle used as a club and a bolo knife — while wounded more than 20 times. France honored him immediately. The United States didn't honor him for 97 years.`
+  },
+  {
+    name:'54th Massachusetts Infantry',
+    subtitle:'The assault on Fort Wagner',
+    war:'Civil War',
+    wikiTitle:'54th_Massachusetts_Infantry',
+    facts:['July 18, 1863','~270 casualties in one assault','Led by Colonel Robert Gould Shaw'],
+    story:`On the evening of July 18, 1863, the 54th Massachusetts Infantry — one of the first formal African-American military units — was asked to lead the assault on Fort Wagner, a heavily fortified Confederate position in South Carolina. Their colonel, Robert Gould Shaw, knew it would be costly. He led it anyway.
+
+They crossed a narrow beach under withering fire, scaled the fort's walls, and fought hand-to-hand inside its ramparts before being driven back. Shaw was killed. More than 270 men were casualties. The Confederates, intending to dishonor him, buried Shaw in a mass grave with his Black soldiers. His father responded: "We can imagine no holier place."
+
+The regiment's courage that night changed Northern opinion about Black soldiers. By the war's end, nearly 180,000 African-Americans had served in the Union Army.`
+  },
+  {
+    name:'Easy Company, 506th PIR',
+    subtitle:'Band of Brothers · 101st Airborne Division',
+    war:'WWII',
+    wikiTitle:'Easy_Company,_506th_Parachute_Infantry_Regiment,_101st_Airborne_Division',
+    facts:['Jumped into Normandy June 6, 1944','Held Bastogne in the Battle of the Bulge','From England to Hitler\'s Eagle\'s Nest'],
+    story:`Easy Company jumped into Normandy in the predawn darkness of June 6, 1944 — scattered by antiaircraft fire, many men landing miles from their targets. They fought their way to their objectives anyway and by morning had knocked out German artillery threatening Utah Beach.
+
+From Normandy they went to the Netherlands, then to the frozen forests outside Bastogne, Belgium — surrounded, undersupplied, and outnumbered in the Battle of the Bulge. When asked to surrender, their commander sent one word back: "Nuts." They held. They always held.
+
+Of the 140 men who jumped into Normandy, only a handful finished the war without being wounded. They went from a training field in England to sharing a drink in Hitler's personal mountain retreat at Berchtesgaden. They became the subject of Stephen Ambrose's book and HBO's Band of Brothers. They earned every word of it.`
+  },
+  {
+    name:'Buffalo Soldiers',
+    subtitle:'9th and 10th Cavalry Regiments',
+    war:'Multiple',
+    wikiTitle:'Buffalo_Soldier',
+    facts:['Formed 1866','Lowest desertion rate in the Army','18 Medals of Honor'],
+    story:`After the Civil War, Congress created six all-Black Army regiments — sent to the frontier, to the hardest postings the Army offered, under white officers who often considered the assignment a punishment.
+
+The Plains tribes they encountered gave them a name: Buffalo Soldiers. The exact origin is debated, but the men of the 9th and 10th Cavalry wore it with pride. They scouted unmapped territory, built roads, strung telegraph wire, and fought in some of the Army's most grueling campaigns. They served in Cuba. They had the lowest desertion rate in the entire Army.
+
+Eighteen received the Medal of Honor. They did all of this while the country they served legally denied them basic rights as citizens. Their record stands as a direct rebuttal to every argument that was ever made against them.`
+  }
+];
+
+const mohStoriesData = [
+  {
+    name:'Joshua Chamberlain',rank:'Colonel',war:'Civil War',warKey:'Civil War',
+    wikiTitle:'Joshua_Chamberlain',date:'July 2, 1863',
+    location:'Little Round Top, Gettysburg, Pennsylvania',
+    summary:`When his regiment ran out of ammunition at Little Round Top, Chamberlain ordered a bayonet charge downhill against an overwhelming Confederate force. The unexpected move worked — capturing hundreds of prisoners and saving the Union's left flank at Gettysburg. His Medal of Honor wasn't awarded until 1893, but the outcome of the battle may have turned on that one decision.`
+  },
+  {
+    name:'Alvin York',rank:'Corporal',war:'WWI',warKey:'WWI',
+    wikiTitle:'Alvin_York',date:'October 8, 1918',
+    location:'Argonne Forest, France',
+    summary:`A Tennessee sharpshooter who had sought conscientious objector status, York found himself the senior soldier after his patrol was pinned down by German fire. Using marksmanship honed hunting in the Tennessee hills, he killed 28 German soldiers and — with six other men — accepted the surrender of 132 prisoners. He remained deeply humble about it for the rest of his life.`
+  },
+  {
+    name:'Henry Johnson',rank:'Private',war:'WWI',warKey:'WWI',
+    wikiTitle:'Henry_Johnson_(World_War_I_soldier)',date:'May 15, 1918',
+    location:'Argonne Forest, France',
+    summary:`On night sentry duty with one other soldier, Johnson was attacked by a German raiding party of more than a dozen men. His rifle jammed. He used it as a club. He drew his bolo knife. Wounded more than 20 times, he drove off the entire raiding party and rescued his partner from capture. France awarded him the Croix de Guerre immediately. The U.S. awarded him the Medal of Honor posthumously — in 2015.`
+  },
+  {
+    name:'Desmond Doss',rank:'Private First Class',war:'WWII',warKey:'WWII',
+    wikiTitle:'Desmond_Doss',date:'April–May 1945',
+    location:'Hacksaw Ridge, Okinawa',
+    summary:`A Seventh-day Adventist who refused to carry a weapon, Doss served as a combat medic. When his unit was driven off Hacksaw Ridge under fire, he stayed behind alone and lowered 75 wounded soldiers down a 350-foot cliff to safety — praying "Lord, help me get one more" as he worked through the night. His Medal of Honor citation called him an inspiration to all who served with him.`
+  },
+  {
+    name:'John Basilone',rank:'Gunnery Sergeant',war:'WWII',warKey:'WWII',
+    wikiTitle:'John_Basilone',date:'October 24–25, 1942',
+    location:'Guadalcanal, Solomon Islands',
+    summary:`During the Battle for Henderson Field, Basilone's Marine unit was surrounded by thousands of Japanese troops. He maintained his machine gun position through the night, killing dozens and personally carrying ammunition under fire to keep other guns firing. He was feted as a hero and used for war bond drives — then voluntarily returned to combat for Iwo Jima, where he was killed on the first day of the landing.`
+  },
+  {
+    name:'Audie Murphy',rank:'Second Lieutenant',war:'WWII',warKey:'WWII',
+    wikiTitle:'Audie_Murphy',date:'January 26, 1945',
+    location:'Near Holtzwihr, France',
+    summary:`The most decorated American soldier of World War II. Near Holtzwihr, with his company outnumbered six-to-one, Murphy climbed onto a burning tank destroyer and used its machine gun to hold off a German advance — alone — for over an hour. He received 33 decorations. He spent the rest of his life fighting severe PTSD and was among the first veterans to speak openly about it.`
+  },
+  {
+    name:'Mitchell Red Cloud Jr.',rank:'Corporal',war:'Korea',warKey:'Korea',
+    wikiTitle:'Mitchell_Red_Cloud_Jr.',date:'November 5, 1950',
+    location:'Near Chonghyon, South Korea',
+    summary:`A Ho-Chunk Nation veteran of both World War II and Korea, Red Cloud spotted an approaching Chinese force in the darkness and shouted a warning before opening fire alone. Severely wounded, he wrapped his arm around a tree to stay upright and kept firing — giving his company time to organize a defense. He was 26 years old. His tribe later named their school after him.`
+  },
+  {
+    name:'Roy Benavidez',rank:'Staff Sergeant',war:'Vietnam',warKey:'Vietnam',
+    wikiTitle:'Roy_Benavidez',date:'May 2, 1968',
+    location:'Near Loc Ninh, South Vietnam',
+    summary:`When a 12-man Special Forces patrol was pinned down and surrounded, Benavidez jumped from a hovering helicopter and ran 75 yards under fire to reach them. He fought for six hours, was wounded 37 times, and saved at least eight lives. A doctor initially declared him dead. He reportedly spat at the doctor to prove otherwise. His Medal of Honor came 13 years later — in 1981.`
+  },
+  {
+    name:'Sal Giunta',rank:'Staff Sergeant',war:'Afghanistan',warKey:'Afghanistan',
+    wikiTitle:'Salvatore_Giunta',date:'October 25, 2007',
+    location:'Korengal Valley, Afghanistan',
+    summary:`When his patrol was ambushed from both sides in the Korengal Valley, Giunta ran through gunfire to pull a wounded soldier to cover, then chased two Taliban fighters who had seized another wounded soldier — rescuing him before he could be taken. He became the first living recipient of the Medal of Honor since Vietnam. He said: "I'm not any more special than anyone else."`
+  },
+  {
+    name:'Dakota Meyer',rank:'Sergeant',war:'Afghanistan',warKey:'Afghanistan',
+    wikiTitle:'Dakota_Meyer',date:'September 8, 2009',
+    location:'Ganjgal Valley, Afghanistan',
+    summary:`When a combined U.S.-Afghan patrol was ambushed and surrounded in the Ganjgal Valley, Meyer drove a gun truck into the kill zone five separate times — against direct orders — to rescue wounded soldiers and recover the fallen. He reached four American service members who had been killed in action and brought them home. He was 21 years old.`
+  }
+];
+
+// Fetch Wikipedia thumbnail for a given article title
+async function fetchWikiThumb(title){
+  try {
+    const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+    if(!res.ok) return null;
+    const data = await res.json();
+    if(data.thumbnail && data.thumbnail.source){
+      // Upscale the thumbnail for better quality
+      return data.thumbnail.source.replace(/\/\d+px-/, '/400px-');
+    }
+    return null;
+  } catch(e){ return null; }
+}
+
+function warBadgeClass(warKey){
+  const m={
+    'Civil War':'civil','WWI':'wwi','WWII':'wwii',
+    'Korea':'korea','Vietnam':'vietnam','Afghanistan':'afghan','Multiple':'wwii'
+  };
+  return m[warKey]||'wwii';
+}
+
+async function buildStories(){
+  storiesDone = true;
+
+  // Fetch all images in parallel
+  const unitImgs = await Promise.all(unitStoriesData.map(u=>fetchWikiThumb(u.wikiTitle)));
+  const mohImgs  = await Promise.all(mohStoriesData.map(m=>fetchWikiThumb(m.wikiTitle)));
+
+  // Render unit stories
+  const unitGrid = document.getElementById('unitStoriesGrid');
+  unitStoriesData.forEach((u, i)=>{
+    const storyParas = u.story.split('\n\n').map(p=>`<p>${p}</p>`).join('');
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.style.animationDelay = (i*80)+'ms';
+    const imgHtml = unitImgs[i]
+      ? `<img class="unit-card-img" src="${unitImgs[i]}" alt="${u.name}" loading="lazy">`
+      : `<div class="unit-card-img-placeholder">&#9876;</div>`;
+    card.innerHTML = `
+      <div>${imgHtml}</div>
+      <div class="unit-card-body">
+        <div class="unit-card-war">${u.war}</div>
+        <div class="unit-card-name">${u.name}</div>
+        <div class="unit-card-subtitle">${u.subtitle}</div>
+        <div class="unit-card-facts">${u.facts.map(f=>`<span class="unit-fact-pill">${f}</span>`).join('')}</div>
+        <div class="unit-card-story">${storyParas}</div>
+      </div>
+    `;
+    unitGrid.appendChild(card);
+  });
+
+  // Render MoH grid
+  const mohGrid = document.getElementById('mohGrid');
+  mohStoriesData.forEach((m, i)=>{
+    const card = document.createElement('div');
+    card.className = 'moh-card';
+    card.dataset.war = m.warKey;
+    card.style.animationDelay = (i*60)+'ms';
+    const badgeClass = warBadgeClass(m.warKey);
+    const photoHtml = mohImgs[i]
+      ? `<img class="moh-photo" src="${mohImgs[i]}" alt="${m.name}" loading="lazy">`
+      : `<span>★</span>`;
+    card.innerHTML = `
+      <div class="moh-photo-wrap">${photoHtml}</div>
+      <div style="text-align:center;margin-bottom:12px;">
+        <span class="moh-war-badge ${badgeClass}">${m.war}</span>
+      </div>
+      <div class="moh-name">${m.name}</div>
+      <div class="moh-rank">${m.rank}</div>
+      <div class="moh-date">${m.date}</div>
+      <div class="moh-summary">${m.summary}</div>
+      <div class="moh-location">${m.location}</div>
+    `;
+    mohGrid.appendChild(card);
+  });
+}
+
+function filterMoH(war, btn){
+  document.querySelectorAll('#mohFilter .toggle-tab').forEach(t=>t.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.querySelectorAll('.moh-card').forEach(card=>{
+    if(war==='all' || card.dataset.war===war){
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
 }
 
 /* ── BOOT ── */
