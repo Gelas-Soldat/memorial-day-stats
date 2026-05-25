@@ -638,6 +638,230 @@ body{
   margin-top:18px;font-family:var(--font-serif);
 }
 
+/* ══ TAB NAV ══ */
+.tab-nav{
+  background:rgba(11,17,32,0.92);
+  backdrop-filter:blur(16px);
+  border-bottom:0.5px solid var(--border);
+  position:sticky;top:0;z-index:50;
+}
+.tab-nav-inner{
+  max-width:960px;margin:0 auto;
+  display:flex;gap:0;overflow-x:auto;
+  scrollbar-width:none;
+}
+.tab-nav-inner::-webkit-scrollbar{display:none;}
+.tab-btn{
+  padding:16px 24px;
+  background:transparent;
+  border:none;border-bottom:2px solid transparent;
+  color:var(--white4);
+  font-family:var(--font-serif);
+  font-size:14px;letter-spacing:0.06em;
+  cursor:pointer;white-space:nowrap;
+  transition:color 0.3s,border-color 0.3s;
+}
+.tab-btn:hover{color:var(--white2);}
+.tab-btn.active{color:var(--white);border-bottom-color:var(--red);}
+
+/* ══ TAB CONTENT ══ */
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+.tab-section{
+  max-width:960px;margin:0 auto;
+  padding:72px 28px 80px;
+}
+
+/* ══ STATE BARS ══ */
+.state-bar-row{
+  display:grid;grid-template-columns:110px 1fr 64px;
+  align-items:center;gap:12px;
+  cursor:default;
+}
+.state-bar-row:hover .state-name{color:var(--white);}
+.state-name{
+  font-family:var(--font-serif);
+  font-size:13px;color:var(--white2);
+  text-align:right;
+}
+.state-track{
+  height:20px;
+  background:rgba(255,255,255,0.04);
+  border:0.5px solid var(--border);
+  border-radius:2px;overflow:hidden;
+}
+.state-fill{
+  height:100%;border-radius:2px;
+  background:rgba(50,90,160,0.7);
+  width:0%;
+  transition:width 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+.state-val{
+  font-family:var(--font-serif);
+  font-size:13px;color:var(--white3);
+}
+
+/* ══ DEEP DIVES ══ */
+.deepdive-item{
+  background:var(--glass);
+  border:0.5px solid var(--border);
+  border-radius:3px;
+  margin-bottom:12px;
+  overflow:hidden;
+  transition:border-color 0.3s;
+}
+.deepdive-item:hover{border-color:var(--border2);}
+.deepdive-header{
+  padding:22px 28px;
+  display:flex;align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+}
+.deepdive-name{
+  font-family:var(--font-serif);
+  font-size:20px;color:var(--white);font-weight:400;
+}
+.deepdive-years{
+  font-size:12px;color:var(--white4);
+  margin-top:3px;font-family:var(--font-serif);
+}
+.deepdive-deaths{
+  font-family:var(--font-serif);
+  font-size:22px;color:var(--gold);
+  text-align:right;
+}
+.deepdive-deaths-label{
+  font-size:10px;color:var(--white4);
+  text-align:right;letter-spacing:0.08em;
+  text-transform:uppercase;
+}
+.deepdive-chevron{
+  margin-left:20px;color:var(--white4);
+  font-size:18px;transition:transform 0.3s;
+  flex-shrink:0;
+}
+.deepdive-item.open .deepdive-chevron{transform:rotate(180deg);}
+.deepdive-body{
+  display:none;
+  padding:0 28px 28px;
+  border-top:0.5px solid var(--border);
+}
+.deepdive-item.open .deepdive-body{display:block;}
+.deepdive-overview{
+  font-family:var(--font-serif);
+  font-size:16px;color:var(--white2);
+  line-height:1.85;margin:20px 0;
+}
+.deepdive-facts{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;margin-top:16px;
+}
+.deepdive-fact{
+  background:rgba(255,255,255,0.03);
+  border:0.5px solid var(--border);
+  border-radius:3px;padding:14px;
+}
+.deepdive-fact-label{
+  font-size:10px;color:var(--white4);
+  text-transform:uppercase;letter-spacing:0.1em;
+  margin-bottom:6px;font-family:var(--font-serif);
+}
+.deepdive-fact-val{
+  font-family:var(--font-serif);
+  font-size:18px;color:var(--white);
+}
+.deepdive-battles{
+  margin-top:20px;
+}
+.deepdive-battles h4{
+  font-family:var(--font-serif);
+  font-size:14px;color:var(--gold);
+  letter-spacing:0.1em;text-transform:uppercase;
+  margin-bottom:12px;font-weight:400;
+}
+.battle-list{
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+.battle-pill{
+  background:rgba(255,255,255,0.04);
+  border:0.5px solid var(--border);
+  border-radius:2px;padding:5px 12px;
+  font-size:13px;color:var(--white3);
+  font-family:var(--font-serif);
+}
+
+/* ══ ON THIS DAY ══ */
+.otd-loading{
+  text-align:center;padding:60px 20px;
+}
+.otd-spinner{
+  width:32px;height:32px;
+  border:2px solid var(--border);
+  border-top-color:var(--gold);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:0 auto 16px;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.otd-card{
+  background:var(--glass);
+  border:0.5px solid var(--border);
+  border-radius:3px;
+  padding:28px;
+  margin-bottom:16px;
+  transition:border-color 0.3s;
+  opacity:0;
+  transform:translateY(10px);
+  animation:fadeUp 0.6s ease both;
+}
+.otd-card:hover{border-color:var(--border2);}
+.otd-year{
+  font-family:var(--font-serif);
+  font-size:13px;color:var(--red-soft);
+  letter-spacing:0.1em;margin-bottom:8px;
+}
+.otd-text{
+  font-family:var(--font-serif);
+  font-size:17px;color:var(--white);
+  line-height:1.75;margin-bottom:10px;
+}
+.otd-link{
+  font-size:13px;color:var(--white4);
+  text-decoration:none;
+  border-bottom:0.5px solid var(--border);
+  padding-bottom:1px;
+  font-family:var(--font-serif);
+  transition:color 0.3s,border-color 0.3s;
+}
+.otd-link:hover{color:var(--white2);border-color:var(--white3);}
+.otd-none{
+  text-align:center;padding:60px 20px;
+  color:var(--white4);font-family:var(--font-serif);
+  font-style:italic;font-size:17px;
+}
+
+/* ══ STORY ══ */
+.story-body{
+  max-width:640px;
+  font-family:var(--font-serif);
+  font-size:19px;color:var(--white2);
+  line-height:1.9;
+}
+.story-body p{margin-bottom:1.4em;}
+.story-heading{
+  font-family:var(--font-serif);
+  font-size:22px;color:var(--white);
+  font-weight:400;margin:2em 0 0.6em;
+}
+.story-byline{
+  font-size:14px;color:var(--white4);
+  border-top:0.5px solid var(--border);
+  padding-top:24px;margin-top:2em;
+  font-style:normal;letter-spacing:0.04em;
+}
+
 @media(max-width:700px){
   .counter-grid{grid-template-columns:repeat(2,1fr);}
   .two-col{grid-template-columns:1fr;}
@@ -645,7 +869,12 @@ body{
   .popbar-row{grid-template-columns:58px 1fr 50px;}
   .costbar-row{grid-template-columns:58px 1fr 70px;}
   .table-scroll-hint{display:block;}
+  .tab-btn{padding:14px 16px;font-size:13px;}
+  .state-bar-row{grid-template-columns:80px 1fr 52px;}
+  .deepdive-facts{grid-template-columns:repeat(2,1fr);}
+  .tab-section{padding:48px 20px 60px;}
 }
+.table-scroll-hint{
 .table-scroll-hint{
   display:none;
   text-align:center;
@@ -759,7 +988,19 @@ body{
   <div class="stripe"></div>
 </div>
 
-<!-- SCALE -->
+<!-- TAB NAVIGATION -->
+<nav class="tab-nav" id="tabNav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" data-tab="dashboard" onclick="switchTab('dashboard',this)">Dashboard</button>
+    <button class="tab-btn" data-tab="bystate" onclick="switchTab('bystate',this)">By State</button>
+    <button class="tab-btn" data-tab="deepdives" onclick="switchTab('deepdives',this)">Each War</button>
+    <button class="tab-btn" data-tab="onthisday" onclick="switchTab('onthisday',this)">On This Day</button>
+    <button class="tab-btn" data-tab="story" onclick="switchTab('story',this)">The Story</button>
+  </div>
+</nav>
+
+<!-- TAB: DASHBOARD (existing content) -->
+<div class="tab-content active" id="tab-dashboard">
 <section class="section" id="scale">
   <p class="section-eyebrow">Angle I — True scale</p>
   <h2 class="section-title">What the raw numbers don't tell you</h2>
@@ -880,6 +1121,108 @@ body{
     <p class="table-scroll-hint">← swipe to see all columns →</p>
   </div>
 </section>
+
+</div><!-- /tab-dashboard -->
+
+<!-- TAB: BY STATE -->
+<div class="tab-content" id="tab-bystate">
+  <div class="tab-section">
+    <p class="section-eyebrow">State by State</p>
+    <h2 class="section-title">The fallen, by home state</h2>
+    <p class="section-desc">Vietnam War casualties by state of residence — the most complete state-level federal record available. Source: National Archives & DoD.</p>
+
+    <div class="card" style="margin-bottom:24px;">
+      <div class="card-title">Filter by conflict</div>
+      <div class="toggle-tabs" id="stateWarTabs">
+        <button class="toggle-tab active" onclick="setStateWar('vietnam',this)">Vietnam War</button>
+        <button class="toggle-tab" onclick="setStateWar('wwii',this)">World War II</button>
+        <button class="toggle-tab" onclick="setStateWar('korea',this)">Korean War</button>
+      </div>
+      <div id="stateNote" style="font-size:14px;color:var(--white4);font-style:italic;margin-bottom:20px;font-family:var(--font-serif);">Vietnam War data from National Archives. Showing deaths by state of residence at time of service.</div>
+      <div id="stateBars" style="display:flex;flex-direction:column;gap:8px;"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Total across all documented wars</div>
+      <div class="card-desc">Combined Vietnam, WWII, and Korea deaths by state — the three conflicts with the most complete state-level records.</div>
+      <div id="stateTotals" style="display:flex;flex-direction:column;gap:8px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB: WAR DEEP-DIVES -->
+<div class="tab-content" id="tab-deepdives">
+  <div class="tab-section">
+    <p class="section-eyebrow">Each Conflict</p>
+    <h2 class="section-title">A closer look at every war</h2>
+    <p class="section-desc">Behind every number is a story. Select any conflict to explore key facts, turning points, and the human cost in context.</p>
+    <div id="deepdiveList"></div>
+  </div>
+</div>
+
+<!-- TAB: ON THIS DAY -->
+<div class="tab-content" id="tab-onthisday">
+  <div class="tab-section">
+    <p class="section-eyebrow" id="todayDate"></p>
+    <h2 class="section-title">On this day in military history</h2>
+    <p class="section-desc">Events drawn from Wikipedia's historical record, filtered for American military history.</p>
+    <div id="otdContent">
+      <div class="otd-loading">
+        <div class="otd-spinner"></div>
+        <p style="color:var(--white4);font-style:italic;font-family:var(--font-serif);">Loading today's events...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB: THE STORY -->
+<div class="tab-content" id="tab-story">
+  <div class="tab-section">
+    <p class="section-eyebrow">Context</p>
+    <h2 class="section-title">Why the numbers don't speak for themselves</h2>
+    <div class="story-body">
+      <p>When we say 620,000 Americans died in the Civil War, most people nod and move on. The number is too large to hold. It doesn't feel like anything.</p>
+
+      <p>That's the problem with war statistics. We treat them like sports scores — one side's total versus another — without ever stopping to understand what they actually represent relative to the country that bore them.</p>
+
+      <p>Consider this: the United States had roughly 31 million people when the Civil War began in 1861. By the time it ended four years later, somewhere between 620,000 and 750,000 soldiers were dead — Union and Confederate combined. That's nearly 2% of every living American. Not 2% of the military. 2% of the entire country.</p>
+
+      <p>To put that in modern terms: if the same proportion of Americans died in a conflict today, we would be burying over 6.6 million people. That's the entire population of Indiana — gone.</p>
+
+      <h3 class="story-heading">The wars that feel distant were the deadliest</h3>
+
+      <p>There's a strange quirk of how we remember wars. Vietnam, with 58,220 American dead, feels vivid and painful — partly because it was televised, partly because veterans are still alive to carry its weight. Iraq and Afghanistan, with roughly 7,000 deaths, feel like recent history.</p>
+
+      <p>But the Civil War — which killed more Americans than every other U.S. conflict combined — feels almost abstract. Sepia photographs. Cannons in parks. Ken Burns documentaries.</p>
+
+      <p>The distance is the point. We can absorb the Civil War as history precisely because it's far enough away that the grief has been processed into culture. The deaths of the 1860s don't have faces we recognize or families we know.</p>
+
+      <h3 class="story-heading">Disease killed more than bullets — until it didn't</h3>
+
+      <p>For most of American military history, the deadliest enemy wasn't the opposing army. It was dysentery. Typhoid. Gangrene. In the Revolutionary War, disease killed four times as many soldiers as combat did. In the Civil War, two soldiers died from infection for every one killed in battle.</p>
+
+      <p>This started to change in World War I with sulfa drugs, and shifted decisively in World War II when penicillin reached the front lines in 1943. By the time of Korea and Vietnam, medevac helicopters and field surgery meant a soldier who survived the initial wound had a dramatically better chance of surviving the war.</p>
+
+      <p>The cost of war didn't just fall — it changed shape. Modern wars kill fewer soldiers but wound more. The VA currently serves more than 3.5 million veterans with service-connected disabilities.</p>
+
+      <h3 class="story-heading">The hidden toll</h3>
+
+      <p>The numbers on this page count the dead. They don't count the more than 30,000 post-9/11 veterans who have died by suicide — more than the 7,057 who died in combat in Iraq and Afghanistan combined. They don't count the wounded, the traumatized, or the families altered permanently by a knock on the door.</p>
+
+      <p>They don't count the Confederate soldiers buried in unmarked graves, or the enslaved people who built the fortifications, or the civilians caught between armies.</p>
+
+      <p>Every dataset has an edge where the counting stops. The numbers here are as complete as the public record allows. The real cost is larger than any spreadsheet can hold.</p>
+
+      <h3 class="story-heading">Why this page exists</h3>
+
+      <p>This isn't a political project. It doesn't argue for or against any war, any policy, or any administration. It exists for one reason: because the people who died in these conflicts deserve to be more than a number in a footnote.</p>
+
+      <p>The least we can do is look at it honestly.</p>
+
+      <p class="story-byline">— fallen.memorial · Data sourced from the U.S. Department of Veterans Affairs and the Department of Defense</p>
+    </div>
+  </div>
+</div>
 
 </main>
 
@@ -1286,6 +1629,297 @@ function buildTable(){
     tbody.appendChild(tr);
     setTimeout(()=>tr.style.opacity='1',i*70+200);
   });
+}
+
+/* ── TAB SWITCHING ── */
+function switchTab(id, btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  // Lazy-init tab content
+  if(id==='bystate' && !stateDone) buildStateBars();
+  if(id==='deepdives' && !deepDone) buildDeepDives();
+  if(id==='onthisday' && !otdDone) buildOnThisDay();
+}
+
+/* ── STATE DATA ── */
+const stateData = {
+  vietnam:{
+    'Alabama':1173,'Alaska':57,'Arizona':619,'Arkansas':591,'California':5575,
+    'Colorado':625,'Connecticut':612,'Delaware':122,'Florida':1954,'Georgia':1587,
+    'Hawaii':275,'Idaho':215,'Illinois':2930,'Indiana':1531,'Iowa':861,
+    'Kansas':625,'Kentucky':1055,'Louisiana':1104,'Maine':340,'Maryland':999,
+    'Massachusetts':1326,'Michigan':2655,'Minnesota':1070,'Mississippi':636,
+    'Missouri':1413,'Montana':268,'Nebraska':395,'Nevada':211,'New Hampshire':226,
+    'New Jersey':1545,'New Mexico':394,'New York':4117,'North Carolina':1613,
+    'North Dakota':196,'Ohio':3095,'Oklahoma':946,'Oregon':712,'Pennsylvania':3142,
+    'Rhode Island':207,'South Carolina':895,'South Dakota':198,'Tennessee':1291,
+    'Texas':3416,'Utah':362,'Vermont':101,'Virginia':1310,'Washington':1049,
+    'West Virginia':714,'Wisconsin':1161,'Wyoming':119
+  },
+  wwii:{
+    'Alabama':4907,'Alaska':98,'Arizona':1703,'Arkansas':3540,'California':21124,
+    'Colorado':2700,'Connecticut':5038,'Delaware':836,'Florida':3639,'Georgia':6754,
+    'Hawaii':399,'Idaho':1642,'Illinois':22476,'Indiana':10321,'Iowa':7980,
+    'Kansas':5248,'Kentucky':6992,'Louisiana':6248,'Maine':2771,'Maryland':5963,
+    'Massachusetts':13892,'Michigan':14977,'Minnesota':8532,'Mississippi':4174,
+    'Missouri':11166,'Montana':2503,'Nebraska':4076,'Nevada':539,'New Hampshire':2104,
+    'New Jersey':12647,'New Mexico':1648,'New York':31215,'North Carolina':8099,
+    'North Dakota':2437,'Ohio':23072,'Oklahoma':6423,'Oregon':4258,'Pennsylvania':29340,
+    'Rhode Island':2251,'South Carolina':4029,'South Dakota':1912,'Tennessee':7428,
+    'Texas':23022,'Utah':2130,'Vermont':1233,'Virginia':7286,'Washington':5858,
+    'West Virginia':6258,'Wisconsin':8390,'Wyoming':995
+  },
+  korea:{
+    'Alabama':811,'Alaska':14,'Arizona':261,'Arkansas':477,'California':3262,
+    'Colorado':401,'Connecticut':641,'Delaware':120,'Florida':548,'Georgia':1017,
+    'Hawaii':100,'Idaho':241,'Illinois':3231,'Indiana':1453,'Iowa':1023,
+    'Kansas':735,'Kentucky':921,'Louisiana':779,'Maine':338,'Maryland':739,
+    'Massachusetts':1744,'Michigan':2001,'Minnesota':1187,'Mississippi':551,
+    'Missouri':1489,'Montana':362,'Nebraska':548,'Nevada':75,'New Hampshire':241,
+    'New Jersey':1613,'New Mexico':230,'New York':4410,'North Carolina':1112,
+    'North Dakota':326,'Ohio':3109,'Oklahoma':855,'Oregon':561,'Pennsylvania':3965,
+    'Rhode Island':270,'South Carolina':541,'South Dakota':287,'Tennessee':1009,
+    'Texas':2765,'Utah':312,'Vermont':170,'Virginia':899,'Washington':816,
+    'West Virginia':729,'Wisconsin':1131,'Wyoming':135
+  }
+};
+
+const stateNotes={
+  vietnam:'Source: National Archives & DoD. Vietnam War deaths by state of residence.',
+  wwii:'Source: National Archives. World War II deaths by state of residence. Includes Army, Navy, Marines, and Air Corps.',
+  korea:'Source: DoD casualty records. Korean War deaths by state of residence.'
+};
+
+let stateDone=false, currentStateWar='vietnam';
+function buildStateBars(war){
+  stateDone=true;
+  renderStateBars(currentStateWar);
+  renderStateTotals();
+}
+
+function setStateWar(war, btn){
+  currentStateWar=war;
+  document.querySelectorAll('#stateWarTabs .toggle-tab').forEach(t=>t.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.getElementById('stateNote').textContent=stateNotes[war];
+  renderStateBars(war);
+}
+
+function renderStateBars(war){
+  const data=stateData[war];
+  const sorted=Object.entries(data).sort((a,b)=>b[1]-a[1]);
+  const max=sorted[0][1];
+  const c=document.getElementById('stateBars');
+  c.innerHTML='';
+  sorted.forEach(([state,val],i)=>{
+    const row=document.createElement('div');
+    row.className='state-bar-row';
+    row.innerHTML=`<div class="state-name">${state}</div><div class="state-track"><div class="state-fill" style="background:${war==='vietnam'?'rgba(50,90,160,0.7)':war==='wwii'?'rgba(139,26,26,0.7)':'rgba(50,120,80,0.7)'}"></div></div><div class="state-val">${val.toLocaleString()}</div>`;
+    c.appendChild(row);
+    setTimeout(()=>row.querySelector('.state-fill').style.width=(val/max*100).toFixed(1)+'%',i*15+100);
+  });
+}
+
+function renderStateTotals(){
+  const totals={};
+  ['vietnam','wwii','korea'].forEach(w=>{
+    Object.entries(stateData[w]).forEach(([s,v])=>{totals[s]=(totals[s]||0)+v;});
+  });
+  const sorted=Object.entries(totals).sort((a,b)=>b[1]-a[1]);
+  const max=sorted[0][1];
+  const c=document.getElementById('stateTotals');
+  c.innerHTML='';
+  sorted.forEach(([state,val],i)=>{
+    const row=document.createElement('div');
+    row.className='state-bar-row';
+    row.innerHTML=`<div class="state-name">${state}</div><div class="state-track"><div class="state-fill" style="background:rgba(184,153,60,0.65)"></div></div><div class="state-val">${val.toLocaleString()}</div>`;
+    c.appendChild(row);
+    setTimeout(()=>row.querySelector('.state-fill').style.width=(val/max*100).toFixed(1)+'%',i*15+200);
+  });
+}
+
+/* ── WAR DEEP-DIVES ── */
+const deepDiveData = [
+  {
+    name:'American Revolutionary War',years:'1775–1783',battle:4435,wounded:6188,service:'217,000',
+    overview:'The war that created the United States lasted eight years and claimed more American lives to disease than to British muskets. Nearly 17,000 soldiers died from illness — smallpox, dysentery, typhoid — for every 4,435 killed in combat. Washington\'s Continental Army struggled constantly with supplies, pay, and desertion.',
+    facts:[
+      {label:'Duration',val:'8 years'},
+      {label:'Battle deaths',val:'4,435'},
+      {label:'Disease deaths',val:'~17,000'},
+      {label:'Theater',val:'Eastern Seaboard'},
+      {label:'Cost (2023 USD)',val:'~$2.4B'},
+      {label:'Ended',val:'Treaty of Paris'}
+    ],
+    battles:['Lexington & Concord','Bunker Hill','Saratoga','Valley Forge','Yorktown']
+  },
+  {
+    name:'American Civil War',years:'1861–1865',battle:214938,wounded:281881,service:'3,263,363',
+    overview:'The deadliest conflict in American history by any measure. More Americans died in this war than in every other U.S. conflict combined. Two soldiers died from infection for every one killed in battle — gangrene, typhoid, and dysentery were relentless. The Union alone lost over 360,000 men. The Confederate dead are estimated at 258,000.',
+    facts:[
+      {label:'Duration',val:'4 years'},
+      {label:'Union battle deaths',val:'140,414'},
+      {label:'Confederate deaths',val:'~74,524'},
+      {label:'% of U.S. population',val:'~2%'},
+      {label:'Cost (2023 USD)',val:'~$80B'},
+      {label:'Ended',val:'Appomattox, 1865'}
+    ],
+    battles:['Fort Sumter','Bull Run','Antietam','Gettysburg','Vicksburg','Sherman\'s March']
+  },
+  {
+    name:'World War I',years:'1917–1918',battle:53402,wounded:204002,service:'4,734,991',
+    overview:'America entered the war late — April 1917 — but suffered over 116,000 deaths in just 19 months. The 1918 influenza pandemic killed more American soldiers than German bullets did. Chemical weapons, trench warfare, and machine guns defined the conflict. The Meuse-Argonne Offensive in fall 1918 was the largest battle in U.S. history to that point.',
+    facts:[
+      {label:'U.S. involvement',val:'19 months'},
+      {label:'Battle deaths',val:'53,402'},
+      {label:'Flu/disease deaths',val:'~63,000'},
+      {label:'Wounded',val:'204,002'},
+      {label:'Cost (2023 USD)',val:'~$334B'},
+      {label:'Ended',val:'Armistice, Nov 11 1918'}
+    ],
+    battles:['Belleau Wood','Saint-Mihiel','Meuse-Argonne','Cantigny','Château-Thierry']
+  },
+  {
+    name:'World War II',years:'1941–1945',battle:291557,wounded:671846,service:'16,112,566',
+    overview:'America\'s largest military mobilization. Over 16 million served. Penicillin reached the front lines in 1943 — the first time in American military history that battle deaths clearly outnumbered disease deaths. The war was fought simultaneously in the Pacific and European theaters across dozens of countries.',
+    facts:[
+      {label:'Duration',val:'4 years'},
+      {label:'Battle deaths',val:'291,557'},
+      {label:'Wounded',val:'671,846'},
+      {label:'Served',val:'16.1 million'},
+      {label:'Cost (2023 USD)',val:'~$4.1T'},
+      {label:'Ended',val:'V-J Day, Sept 2 1945'}
+    ],
+    battles:['Pearl Harbor','Midway','Guadalcanal','D-Day','Battle of the Bulge','Iwo Jima','Okinawa']
+  },
+  {
+    name:'Korean War',years:'1950–1953',battle:33686,wounded:103284,service:'5,720,000',
+    overview:'Called "The Forgotten War" — Korea sits between WWII and Vietnam in American memory but claimed over 36,000 American lives in three years. The conflict ended in an armistice, not a peace treaty. Technically, the Korean War has never officially ended. The 38th parallel division that started the war remains the border today.',
+    facts:[
+      {label:'Duration',val:'3 years'},
+      {label:'Battle deaths',val:'33,686'},
+      {label:'Wounded',val:'103,284'},
+      {label:'Outcome',val:'Armistice only'},
+      {label:'Cost (2023 USD)',val:'~$341B'},
+      {label:'Status',val:'Armistice still active'}
+    ],
+    battles:['Pusan Perimeter','Inchon Landing','Battle of Chosin Reservoir','Heartbreak Ridge','Pork Chop Hill']
+  },
+  {
+    name:'Vietnam War',years:'1964–1975',battle:47434,wounded:153303,service:'8,744,000',
+    overview:'58,220 Americans died. Over 3 million Vietnamese — military and civilian, North and South — died in the same conflict. The first televised war in American history. Average age of a combat soldier was 19. Medevac helicopters cut the ratio of wounded-to-killed in half compared to Korea. Veterans returned to a country deeply divided about the war they had fought.',
+    facts:[
+      {label:'Duration',val:'11 years (U.S. combat)'},
+      {label:'Battle deaths',val:'47,434'},
+      {label:'Total deaths',val:'58,220'},
+      {label:'Avg. soldier age',val:'19 years'},
+      {label:'Cost (2023 USD)',val:'~$844B'},
+      {label:'Ended',val:'Fall of Saigon, 1975'}
+    ],
+    battles:['Gulf of Tonkin','Ia Drang Valley','Tet Offensive','Khe Sanh','Hamburger Hill','Easter Offensive']
+  },
+  {
+    name:'Iraq & Afghanistan',years:'2001–2021',battle:7057,wounded:53174,service:'3,500,000+',
+    overview:'The longest wars in American history. Body armor, MRAP vehicles, and advanced trauma surgery saved lives that would have been fatal in any previous conflict — the ratio of killed to wounded reached historic lows. But 30,000+ veterans have since died by suicide. The human cost of these wars continues to accumulate in ways the casualty lists don\'t capture.',
+    facts:[
+      {label:'Duration',val:'20 years'},
+      {label:'Battle deaths',val:'7,057'},
+      {label:'Wounded',val:'53,174+'},
+      {label:'Post-war suicides',val:'30,000+'},
+      {label:'Cost (2023 USD)',val:'~$2.3T'},
+      {label:'Ended',val:'Kabul withdrawal, 2021'}
+    ],
+    battles:['Tora Bora','Fallujah','Ramadi','Korengal Valley','Marjah','Kandahar']
+  }
+];
+
+let deepDone=false;
+function buildDeepDives(){
+  deepDone=true;
+  const c=document.getElementById('deepdiveList');
+  deepDiveData.forEach((w,i)=>{
+    const item=document.createElement('div');
+    item.className='deepdive-item';
+    item.innerHTML=`
+      <div class="deepdive-header" onclick="toggleDeepDive(this.parentElement)">
+        <div>
+          <div class="deepdive-name">${w.name}</div>
+          <div class="deepdive-years">${w.years}</div>
+        </div>
+        <div style="text-align:right;margin-left:auto;padding-right:16px;">
+          <div class="deepdive-deaths">${w.battle.toLocaleString()}</div>
+          <div class="deepdive-deaths-label">battle deaths</div>
+        </div>
+        <div class="deepdive-chevron">▾</div>
+      </div>
+      <div class="deepdive-body">
+        <p class="deepdive-overview">${w.overview}</p>
+        <div class="deepdive-facts">
+          ${w.facts.map(f=>`<div class="deepdive-fact"><div class="deepdive-fact-label">${f.label}</div><div class="deepdive-fact-val">${f.val}</div></div>`).join('')}
+        </div>
+        <div class="deepdive-battles">
+          <h4>Key battles & events</h4>
+          <div class="battle-list">
+            ${w.battles.map(b=>`<span class="battle-pill">${b}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+    c.appendChild(item);
+  });
+}
+
+function toggleDeepDive(el){
+  el.classList.toggle('open');
+}
+
+/* ── ON THIS DAY ── */
+let otdDone=false;
+const MILITARY_KEYWORDS=['war','battle','military','army','navy','marines','troops','killed','soldier','attack','bomb','invasion','siege','fleet','aircraft','combat','regiment','brigade','division','corps','general','admiral','commander','surrender','armistice','treaty','victory','defeat','offensive','operation','campaign','veteran'];
+
+async function buildOnThisDay(){
+  otdDone=true;
+  const now=new Date();
+  const m=String(now.getMonth()+1).padStart(2,'0');
+  const d=String(now.getDate()).padStart(2,'0');
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('todayDate').textContent=`${months[now.getMonth()]} ${now.getDate()}`;
+
+  const c=document.getElementById('otdContent');
+  try {
+    const res=await fetch(`https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/${m}/${d}`);
+    if(!res.ok) throw new Error('API unavailable');
+    const data=await res.json();
+
+    const military=data.events.filter(e=>{
+      const t=e.text.toLowerCase();
+      return MILITARY_KEYWORDS.some(k=>t.includes(k)) &&
+             (t.includes('united states')||t.includes('american')||t.includes('u.s.')||t.includes('us army')||t.includes('us navy')||t.includes('confederate')||t.includes('union')||t.includes('war of'));
+    }).sort((a,b)=>a.year-b.year);
+
+    if(military.length===0){
+      c.innerHTML=`<div class="otd-none">No American military events found for ${months[now.getMonth()]} ${now.getDate()} in the Wikipedia record.<br><br>Try checking back — historical records vary by date.</div>`;
+      return;
+    }
+
+    c.innerHTML='';
+    military.slice(0,10).forEach((ev,i)=>{
+      const page=ev.pages && ev.pages[0];
+      const card=document.createElement('div');
+      card.className='otd-card';
+      card.style.animationDelay=(i*80)+'ms';
+      card.innerHTML=`
+        <div class="otd-year">${ev.year}</div>
+        <div class="otd-text">${ev.text}</div>
+        ${page?`<a class="otd-link" href="${page.content_urls.desktop.page}" target="_blank" rel="noopener noreferrer">Read more on Wikipedia →</a>`:''}
+      `;
+      c.appendChild(card);
+    });
+  } catch(err){
+    c.innerHTML=`<div class="otd-none">Could not load today's military history events.<br><br>Please check your connection and try again.</div>`;
+  }
 }
 
 /* ── BOOT ── */
