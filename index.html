@@ -658,18 +658,29 @@ body{
   background:var(--glass);
   border:0.5px solid var(--border);
   border-radius:3px;overflow:hidden;
-  display:grid;grid-template-columns:280px 1fr;
+  display:grid;grid-template-columns:260px 1fr;
   transition:border-color 0.3s;
 }
 .unit-card:hover{border-color:var(--border2);}
+.unit-img-wrap{
+  position:relative;overflow:hidden;
+  background:linear-gradient(160deg,rgba(20,35,80,0.8),rgba(50,20,20,0.8));
+  min-height:240px;
+}
 .unit-card-img{
-  width:100%;height:100%;min-height:220px;
-  object-fit:cover;object-position:center top;
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:50% 20%;
   display:block;
-  background:var(--surface2);
+  position:absolute;inset:0;
+}
+.unit-img-overlay{
+  position:absolute;bottom:0;left:0;right:0;height:40%;
+  background:linear-gradient(transparent,rgba(11,17,32,0.6));
+  pointer-events:none;
 }
 .unit-card-img-placeholder{
-  width:100%;height:220px;
+  width:100%;min-height:240px;
   background:linear-gradient(135deg,rgba(50,90,160,0.2),rgba(139,26,52,0.2));
   display:flex;align-items:center;justify-content:center;
   font-size:48px;
@@ -725,16 +736,19 @@ body{
 .moh-card:hover{border-color:var(--border2);background:var(--glass2);}
 .moh-card.hidden{display:none;}
 .moh-photo-wrap{
-  width:80px;height:80px;border-radius:50%;
+  width:110px;height:110px;border-radius:50%;
   overflow:hidden;margin:0 auto 16px;
   border:2px solid var(--border2);
-  background:rgba(50,90,160,0.2);
+  background:linear-gradient(135deg,rgba(30,55,110,0.5),rgba(100,30,30,0.3));
   display:flex;align-items:center;justify-content:center;
-  font-size:32px;
+  font-size:36px;
 }
 .moh-photo{
   width:100%;height:100%;
-  object-fit:cover;object-position:top;
+  object-fit:cover;
+  /* 50% 20% — shows upper-middle of image, capturing face in most portrait photos
+     without cutting to the extreme top edge where caption text often lives */
+  object-position:50% 20%;
 }
 .moh-war-badge{
   display:inline-block;
@@ -779,9 +793,13 @@ body{
 
 @media(max-width:700px){
   .unit-card{grid-template-columns:1fr;}
-  .unit-card-img{height:200px;width:100%;}
+  .unit-img-wrap{min-height:200px;position:relative;}
   .unit-card-img-placeholder{height:160px;}
   .moh-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+  .tab-btn{padding:14px 16px;font-size:13px;}
+  .state-bar-row{grid-template-columns:80px 1fr 52px;}
+  .deepdive-facts{grid-template-columns:repeat(2,1fr);}
+  .tab-section{padding:48px 20px 60px;}
 }
 
 .tab-nav{
@@ -2111,7 +2129,9 @@ const unitStoriesData = [
     name:'442nd Infantry Regiment',
     subtitle:'"Go for Broke"',
     war:'WWII',
-    wikiTitle:'442nd_Infantry_Regiment',
+    // Daniel Inouye: most famous 442nd veteran, Medal of Honor recipient, US Senator.
+    // His Wikipedia article has a clear official portrait — better than the regimental coat of arms.
+    wikiTitle:'Daniel_Inouye',
     facts:['21 Medals of Honor','9,486 Purple Hearts','18,143 individual decorations'],
     story:`They volunteered to fight for a country that had imprisoned their families. The 442nd Infantry Regiment — composed entirely of Japanese-American soldiers — was formed in 1943, while over 120,000 Japanese-Americans were held in internment camps across the West Coast. Most men who signed up did so knowing their parents, siblings, and children were behind barbed wire.
 
@@ -2123,7 +2143,8 @@ By the war's end, they had become the most decorated unit for their size and len
     name:'Tuskegee Airmen',
     subtitle:'332nd Fighter Group',
     war:'WWII',
-    wikiTitle:'Tuskegee_Airmen',
+    // Benjamin O. Davis Jr. commanded the 332nd Fighter Group — clear official portrait on Wikipedia.
+    wikiTitle:'Benjamin_O._Davis_Jr.',
     facts:['15,000+ sorties flown','66 Distinguished Flying Crosses','96 killed in action'],
     story:`When the Army Air Corps opened flight training to Black Americans in 1941, many expected it to fail. The program was built at Tuskegee, Alabama — in the heart of the Jim Crow South — under conditions that were meant to demonstrate that Black pilots couldn't measure up. They were wrong.
 
@@ -2135,7 +2156,9 @@ When they came home, many were still forced to use separate water fountains. The
     name:'Harlem Hellfighters',
     subtitle:'369th Infantry Regiment',
     war:'WWI',
-    wikiTitle:'369th_Infantry_Regiment_(United_States)',
+    // James Reese Europe: the Hellfighters' famous bandleader and lieutenant,
+    // has a clear portrait photo on Wikipedia.
+    wikiTitle:'James_Reese_Europe',
     facts:['191 days in trenches','Never lost a prisoner or a foot of ground','Entire regiment awarded Croix de Guerre'],
     story:`The U.S. Army didn't know what to do with Black soldiers in 1917. The 369th Infantry — drawn largely from Harlem — was handed over to the French, who had no such hesitations. The French needed men. They gave them weapons, rations, and respect.
 
@@ -2147,7 +2170,8 @@ Private Henry Johnson became a legend. Alone on night sentry duty, he fought off
     name:'54th Massachusetts Infantry',
     subtitle:'The assault on Fort Wagner',
     war:'Civil War',
-    wikiTitle:'54th_Massachusetts_Infantry',
+    // Robert Gould Shaw: the regiment's commander, has a famous portrait on Wikipedia.
+    wikiTitle:'Robert_Gould_Shaw',
     facts:['July 18, 1863','~270 casualties in one assault','Led by Colonel Robert Gould Shaw'],
     story:`On the evening of July 18, 1863, the 54th Massachusetts Infantry — one of the first formal African-American military units — was asked to lead the assault on Fort Wagner, a heavily fortified Confederate position in South Carolina. Their colonel, Robert Gould Shaw, knew it would be costly. He led it anyway.
 
@@ -2159,7 +2183,8 @@ The regiment's courage that night changed Northern opinion about Black soldiers.
     name:'Easy Company, 506th PIR',
     subtitle:'Band of Brothers · 101st Airborne Division',
     war:'WWII',
-    wikiTitle:'Easy_Company,_506th_Parachute_Infantry_Regiment,_101st_Airborne_Division',
+    // Dick Winters: Easy Company's most famous commander, clear portrait photo on Wikipedia.
+    wikiTitle:'Dick_Winters',
     facts:['Jumped into Normandy June 6, 1944','Held Bastogne in the Battle of the Bulge','From England to Hitler\'s Eagle\'s Nest'],
     story:`Easy Company jumped into Normandy in the predawn darkness of June 6, 1944 — scattered by antiaircraft fire, many men landing miles from their targets. They fought their way to their objectives anyway and by morning had knocked out German artillery threatening Utah Beach.
 
@@ -2171,7 +2196,8 @@ Of the 140 men who jumped into Normandy, only a handful finished the war without
     name:'Buffalo Soldiers',
     subtitle:'9th and 10th Cavalry Regiments',
     war:'Multiple',
-    wikiTitle:'Buffalo_Soldier',
+    // Charles Young: first Black Army colonel, led Buffalo Soldiers, famous portrait photo.
+    wikiTitle:'Charles_Young_(United_States_Army)',
     facts:['Formed 1866','Lowest desertion rate in the Army','18 Medals of Honor'],
     story:`After the Civil War, Congress created six all-Black Army regiments — sent to the frontier, to the hardest postings the Army offered, under white officers who often considered the assignment a punishment.
 
@@ -2244,17 +2270,18 @@ const mohStoriesData = [
   }
 ];
 
-// Fetch Wikipedia thumbnail for a given article title
+// Fetch Wikipedia thumbnail using the MediaWiki Action API
+// More reliable than REST API — proper CORS via origin=*, no URL manipulation needed
 async function fetchWikiThumb(title){
   try {
-    const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+    const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(title)}&prop=pageimages&pithumbsize=500&pilicense=any&format=json&origin=*`;
+    const res = await fetch(url);
     if(!res.ok) return null;
     const data = await res.json();
-    if(data.thumbnail && data.thumbnail.source){
-      // Upscale the thumbnail for better quality
-      return data.thumbnail.source.replace(/\/\d+px-/, '/400px-');
-    }
-    return null;
+    const pages = data.query?.pages;
+    if(!pages) return null;
+    const page = Object.values(pages)[0];
+    return page?.thumbnail?.source || null;
   } catch(e){ return null; }
 }
 
@@ -2281,7 +2308,7 @@ async function buildStories(){
     card.className = 'unit-card';
     card.style.animationDelay = (i*80)+'ms';
     const imgHtml = unitImgs[i]
-      ? `<img class="unit-card-img" src="${unitImgs[i]}" alt="${u.name}" loading="lazy">`
+      ? `<div class="unit-img-wrap"><img class="unit-card-img" src="${unitImgs[i]}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'unit-card-img-placeholder\\'>&#9876;</div>'"><div class="unit-img-overlay"></div></div>`
       : `<div class="unit-card-img-placeholder">&#9876;</div>`;
     card.innerHTML = `
       <div>${imgHtml}</div>
@@ -2305,7 +2332,7 @@ async function buildStories(){
     card.style.animationDelay = (i*60)+'ms';
     const badgeClass = warBadgeClass(m.warKey);
     const photoHtml = mohImgs[i]
-      ? `<img class="moh-photo" src="${mohImgs[i]}" alt="${m.name}" loading="lazy">`
+      ? `<img class="moh-photo" src="${mohImgs[i]}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<span>★</span>'">`
       : `<span>★</span>`;
     card.innerHTML = `
       <div class="moh-photo-wrap">${photoHtml}</div>
