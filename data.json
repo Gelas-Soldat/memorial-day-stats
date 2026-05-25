@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_updated": "2026-05-24",
+    "last_updated": "2026-05-25",
     "source": "U.S. Department of Veterans Affairs — Americas Wars fact sheet",
     "source_url": "https://department.va.gov/americas-wars/",
     "dcas_url": "https://dcas.dmdc.osd.mil/dcas/app/summaryData/deaths/byWar",
@@ -124,22 +124,74 @@
     }
   ],
   "cause_breakdown": [
-    { "name": "Rev. War", "battle": 4435, "disease": 17000 },
-    { "name": "Civil War", "battle": 214938, "disease": 359394 },
-    { "name": "WWI", "battle": 53402, "disease": 63114 },
-    { "name": "WWII", "battle": 291557, "disease": 113842 },
-    { "name": "Korea", "battle": 33686, "disease": 2830 },
-    { "name": "Vietnam", "battle": 47434, "disease": 10786 },
-    { "name": "Iraq/Afghan", "battle": 7057, "disease": 1300 }
+    {
+      "name": "Rev. War",
+      "battle": 4435,
+      "disease": 17000
+    },
+    {
+      "name": "Civil War",
+      "battle": 214938,
+      "disease": 359394
+    },
+    {
+      "name": "WWI",
+      "battle": 53402,
+      "disease": 63114
+    },
+    {
+      "name": "WWII",
+      "battle": 291557,
+      "disease": 113842
+    },
+    {
+      "name": "Korea",
+      "battle": 33686,
+      "disease": 2830
+    },
+    {
+      "name": "Vietnam",
+      "battle": 47434,
+      "disease": 10786
+    },
+    {
+      "name": "Iraq/Afghan",
+      "battle": 7057,
+      "disease": 1300
+    }
   ],
   "cost_per_death": [
-    { "label": "Rev. War", "cost": 0.0005 },
-    { "label": "Civil War", "cost": 0.0006 },
-    { "label": "Mexican War", "cost": 0.12 },
-    { "label": "WWI", "cost": 6.3 },
-    { "label": "WWII", "cost": 14.1 },
-    { "label": "Korea", "cost": 10.1 },
-    { "label": "Vietnam", "cost": 17.8 },
-    { "label": "Iraq/Afghan", "cost": 326 }
+    {
+      "label": "Rev. War",
+      "cost": 0.0005
+    },
+    {
+      "label": "Civil War",
+      "cost": 0.0006
+    },
+    {
+      "label": "Mexican War",
+      "cost": 0.12
+    },
+    {
+      "label": "WWI",
+      "cost": 6.3
+    },
+    {
+      "label": "WWII",
+      "cost": 14.1
+    },
+    {
+      "label": "Korea",
+      "cost": 10.1
+    },
+    {
+      "label": "Vietnam",
+      "cost": 17.8
+    },
+    {
+      "label": "Iraq/Afghan",
+      "cost": 326
+    }
   ]
 }
