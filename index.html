@@ -67,8 +67,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400&display=swap"></noscript>
 
-<!-- Chart.js loaded with defer — doesn't block rendering -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" defer></script>
+<!-- Chart.js loaded dynamically when user reaches the charts section -->
 <style>
 /* Critical above-fold CSS — inlined for instant render */
 /* Ensures hero is visible before full stylesheet parses */
@@ -244,13 +243,13 @@ body{
   width:160px;height:0.5px;
   background:linear-gradient(90deg,transparent,var(--gold),transparent);
   margin:0 auto 26px;
-  opacity:0;animation:fadeUp 1.2s ease 0.7s both;
+  opacity:0;animation:fadeUp 0.8s ease 0.2s both;
 }
 .hero-eyebrow{
   font-size:13px;letter-spacing:0.22em;color:var(--gold);
   text-transform:uppercase;margin-bottom:20px;
   font-family:'Source Serif 4',serif;font-weight:400;
-  opacity:0;animation:fadeUp 1.2s ease 0.9s both;
+  opacity:0;animation:fadeUp 0.8s ease 0.3s both;
 }
 .hero-title{
   font-family:'Playfair Display',serif;
@@ -258,7 +257,7 @@ body{
   font-weight:400;color:var(--white);
   line-height:1.12;margin-bottom:18px;
   letter-spacing:-0.01em;
-  opacity:0;animation:fadeUp 1.2s ease 1.1s both;
+  opacity:1;animation:fadeUp 1.2s ease 0s both;
 }
 .hero-title em{font-style:italic;color:var(--white2);}
 .hero-divider{
@@ -987,7 +986,13 @@ const sc=document.getElementById('starsCanvas');
 const sctx=sc.getContext('2d');
 let stars=[];
 const isMobile=window.innerWidth<700;
-function resizeS(){sc.width=window.innerWidth;sc.height=window.innerHeight;makeStars();}
+function resizeS(){
+  requestAnimationFrame(()=>{
+    sc.width=window.innerWidth;
+    sc.height=window.innerHeight;
+    makeStars();
+  });
+}
 function makeStars(){
   stars=[];
   // Fewer stars on mobile — less CPU drain
@@ -1175,6 +1180,17 @@ function buildCandles(){
 let causeInst=null,causeDone=false;
 function buildCauseChart(){
   if(causeDone)return;causeDone=true;
+  // Dynamically load Chart.js only when needed
+  if(typeof Chart === 'undefined'){
+    const script=document.createElement('script');
+    script.src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js';
+    script.onload=()=>renderCauseChart();
+    document.head.appendChild(script);
+  } else {
+    renderCauseChart();
+  }
+}
+function renderCauseChart(){
   const gc='rgba(255,255,255,0.07)',tc='rgba(184,178,164,0.9)';
   causeInst=new Chart(document.getElementById('causeChart'),{
     type:'bar',
