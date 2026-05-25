@@ -938,21 +938,25 @@ const INLINE_DATA = {
   ]
 };
 
-/* ── LOAD DATA — uses inline data instantly, then tries to fetch updates ── */
-async function loadData(){
-  // Use inline data immediately — zero network wait
+/* ── LOAD DATA — uses inline data instantly, fetch updates after idle ── */
+function loadData(){
+  // Apply inline data immediately — zero network wait
   applyData(INLINE_DATA);
 
-  // Then try to fetch latest data.json in background for any updates
-  try {
-    const dataUrl = new URL('./data.json', window.location.href).href;
-    const res = await fetch(dataUrl);
-    if(res.ok){
-      const d = await res.json();
-      applyData(d);
-    }
-  } catch(err) {
-    console.warn('Could not fetch data.json update:', err);
+  // Fetch latest data.json in background AFTER page is idle
+  // Using requestIdleCallback so it never appears in the critical path
+  const fetchUpdate = () => {
+    try {
+      const dataUrl = new URL('./data.json', window.location.href).href;
+      fetch(dataUrl).then(res=>{
+        if(res.ok) res.json().then(d=>applyData(d));
+      }).catch(()=>{});
+    } catch(e){}
+  };
+  if('requestIdleCallback' in window){
+    requestIdleCallback(fetchUpdate, {timeout:5000});
+  } else {
+    setTimeout(fetchUpdate, 3000);
   }
   return true;
 }
@@ -994,21 +998,23 @@ function applyData(d){
 const sc=document.getElementById('starsCanvas');
 const sctx=sc.getContext('2d');
 let stars=[];
-const isMobile=window.innerWidth<700;
+let isMobile=false; // set after load to avoid forced reflow at parse time
 function resizeS(){
   requestAnimationFrame(()=>{
     sc.width=window.innerWidth;
     sc.height=window.innerHeight;
+    isMobile=window.innerWidth<700;
     makeStars();
   });
 }
 function makeStars(){
   stars=[];
-  // Fewer stars on mobile — less CPU drain
   const density = isMobile ? 18000 : 5500;
-  const n=Math.floor(sc.width*sc.height/density);
+  const w=sc.width||window.screen.width;
+  const h=sc.height||window.screen.height;
+  const n=Math.floor(w*h/density);
   for(let i=0;i<n;i++)
-    stars.push({x:Math.random()*sc.width,y:Math.random()*sc.height,
+    stars.push({x:Math.random()*w,y:Math.random()*h,
       r:Math.random()*0.85+0.1,a:Math.random()*0.2+0.03,
       phase:Math.random()*Math.PI*2,spd:Math.random()*0.007+0.002});
 }
@@ -1286,7 +1292,7 @@ function buildTable(){
 // Load data.json first, then wire up all scroll/intersection logic.
 // This ensures every chart and table uses live data from the file.
 async function init(){
-  await loadData();
+  loadData(); // synchronous now — uses inline data immediately
 
   // Show seasonal banner around Memorial Day (last Mon of May ± 2 days)
   try {
