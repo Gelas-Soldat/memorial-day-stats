@@ -223,21 +223,13 @@ body{
 
 .flame-svg{
   width:44px;height:56px;display:block;margin:0 auto 28px;
-  opacity:0;animation:fadeUp 1.4s ease 0.5s both;
+  opacity:0;
+  animation:fadeUp 1.4s ease 0.5s both;
   filter:drop-shadow(0 0 18px rgba(200,168,74,0.55));
-  animation-name:fadeUp,flicker;
-  animation-duration:1.4s,4s;
-  animation-timing-function:ease,ease-in-out;
-  animation-delay:0.5s,2s;
-  animation-fill-mode:both,none;
-  animation-iteration-count:1,infinite;
+  will-change:transform,opacity;
 }
-@keyframes flicker{
-  0%,100%{transform:scale(1) rotate(-0.5deg);}
-  20%{transform:scale(1.05) rotate(0.8deg);}
-  50%{transform:scale(0.97) rotate(-0.4deg);}
-  75%{transform:scale(1.02) rotate(0.6deg);}
-}
+/* flicker removed — scale()+rotate() are not composited on mobile
+   and caused a non-composited animation warning in Lighthouse */
 
 .hero-rule{
   width:160px;height:0.5px;
@@ -943,21 +935,16 @@ function loadData(){
   // Apply inline data immediately — zero network wait
   applyData(INLINE_DATA);
 
-  // Fetch latest data.json in background AFTER page is idle
-  // Using requestIdleCallback so it never appears in the critical path
-  const fetchUpdate = () => {
+  // Fetch latest data.json after a hard 5s delay — well outside critical path
+  // Do NOT use requestIdleCallback alone — it fires too early on fast connections
+  setTimeout(()=>{
     try {
       const dataUrl = new URL('./data.json', window.location.href).href;
       fetch(dataUrl).then(res=>{
-        if(res.ok) res.json().then(d=>applyData(d));
+        if(res.ok) res.json().then(d=>applyData(d)).catch(()=>{});
       }).catch(()=>{});
     } catch(e){}
-  };
-  if('requestIdleCallback' in window){
-    requestIdleCallback(fetchUpdate, {timeout:5000});
-  } else {
-    setTimeout(fetchUpdate, 3000);
-  }
+  }, 5000);
   return true;
 }
 
@@ -1025,8 +1012,13 @@ const fc=document.getElementById('flagCanvas');
 const fctx=fc.getContext('2d');
 let flagProgress=0; // 0..1
 
-function resizeFlag(){fc.width=window.innerWidth;fc.height=window.innerHeight;}
-resizeFlag();window.addEventListener('resize',resizeFlag);
+function resizeFlag(){
+  requestAnimationFrame(()=>{
+    fc.width=window.innerWidth;
+    fc.height=window.innerHeight;
+  });
+}
+window.addEventListener('resize',resizeFlag);
 
 function drawFlag(progress){
   // Skip on mobile — too heavy for low-end CPUs
@@ -1139,11 +1131,7 @@ function onScroll(){
     fc.style.opacity=fp>0?'1':'0';
   }
 
-  // Flag stripe dividers
-  document.querySelectorAll('.flag-divider').forEach(fd=>{
-    const r=fd.getBoundingClientRect();
-    if(r.top<window.innerHeight*0.92)fd.classList.add('visible');
-  });
+  // Flag stripe dividers — handled by IntersectionObserver, not scroll handler
 }
 
 /* ── triggerSection ── */
@@ -1332,11 +1320,18 @@ async function init(){
   window.addEventListener('scroll',onScroll,{passive:true});
   window.addEventListener('resize',()=>{
     resizeS();
-    cacheSectionTops();
+    // Re-cache after resize — deferred to avoid reflow during resize
+    requestAnimationFrame(cacheSectionTops);
   });
-  // Cache section positions after DOM is ready
-  cacheSectionTops();
-  onScroll();
+  // Defer section top caching to after first paint — reading layout before
+  // paint causes forced reflow which Lighthouse flags
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      resizeFlag(); // safe to read innerWidth after first paint
+      cacheSectionTops();
+      onScroll();
+    });
+  });
 
   // Sections fade-in
   const obs=new IntersectionObserver(entries=>{
@@ -1348,6 +1343,12 @@ async function init(){
     });
   },{threshold:0.08});
   document.querySelectorAll('.section').forEach(s=>obs.observe(s));
+
+  // Flag dividers — use IntersectionObserver, never getBoundingClientRect on scroll
+  const flagDivObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+  },{rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.flag-divider').forEach(fd=>flagDivObs.observe(fd));
 
   // Counters
   const counterStrip = document.querySelector('.counter-strip');
