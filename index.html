@@ -532,6 +532,17 @@ body{
   .progress-nav{display:none;}
   .popbar-row{grid-template-columns:58px 1fr 50px;}
   .costbar-row{grid-template-columns:58px 1fr 70px;}
+  .table-scroll-hint{display:block;}
+}
+.table-scroll-hint{
+  display:none;
+  text-align:center;
+  font-family:'Source Serif 4',serif;
+  font-size:10px;
+  letter-spacing:0.12em;
+  color:var(--white4);
+  padding:10px 0 14px;
+  border-top:0.5px solid var(--border);
 }
 </style>
 </head>
@@ -733,15 +744,18 @@ body{
   <h2 class="section-title">Every major conflict, by the numbers</h2>
   <p class="section-desc">Source: U.S. Department of Veterans Affairs, America's Wars fact sheet. These are official government-recorded figures.</p>
   <div class="card" style="padding:0;overflow:hidden;">
-    <table class="war-table">
-      <thead>
-        <tr>
-          <th>Conflict</th><th>Service members</th>
-          <th>Battle deaths</th><th>Other deaths</th><th>Wounded</th>
-        </tr>
-      </thead>
-      <tbody id="warTableBody"></tbody>
-    </table>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+      <table class="war-table" style="min-width:560px;">
+        <thead>
+          <tr>
+            <th>Conflict</th><th>Service members</th>
+            <th>Battle deaths</th><th>Other deaths</th><th>Wounded</th>
+          </tr>
+        </thead>
+        <tbody id="warTableBody"></tbody>
+      </table>
+    </div>
+    <p class="table-scroll-hint">← swipe to see all columns →</p>
   </div>
 </section>
 
