@@ -885,8 +885,13 @@ let wars=[], causeWars=[], costData=[], timelineItems=[];
 /* ── LOAD DATA FROM data.json ── */
 async function loadData(){
   try {
-    const res = await fetch('data.json');
-    if(!res.ok) throw new Error('data.json not found');
+    // Resolve data.json relative to wherever index.html lives
+    const base = document.currentScript
+      ? document.currentScript.src.replace(/[^/]*$/, '')
+      : (window.location.pathname.replace(/[^/]*$/, ''));
+    const dataUrl = new URL('./data.json', window.location.href).href;
+    const res = await fetch(dataUrl);
+    if(!res.ok) throw new Error('data.json not found at ' + dataUrl);
     const d = await res.json();
 
     wars = d.wars;
@@ -1144,7 +1149,6 @@ function buildCandles(){
 let causeInst=null,causeDone=false;
 function buildCauseChart(){
   if(causeDone)return;causeDone=true;
-  const gc='rgba(255,255,255,0.05)',tc='rgba(168,158,140,0.8)';
   const gc='rgba(255,255,255,0.07)',tc='rgba(184,178,164,0.9)';
   causeInst=new Chart(document.getElementById('causeChart'),{
     type:'bar',
@@ -1230,20 +1234,20 @@ async function init(){
   await loadData();
 
   // Show seasonal banner around Memorial Day (last Mon of May ± 2 days)
-  const now = new Date();
-  const month = now.getMonth(); // 4 = May
-  const day = now.getDate();
-  if(month === 4){
-    // Find last Monday of May
-    const lastDay = new Date(now.getFullYear(), 5, 0).getDate();
-    let lastMonday = lastDay;
-    const lastDayOfMonth = new Date(now.getFullYear(), 4, lastDay);
-    while(lastDayOfMonth.getDay() !== 1){ lastDayOfMonth.setDate(lastDayOfMonth.getDate()-1); }
-    const memDay = lastDayOfMonth.getDate();
-    if(day >= memDay - 2 && day <= memDay + 1){
-      document.getElementById('seasonalBanner').classList.add('show');
+  try {
+    const now = new Date();
+    const month = now.getMonth(); // 4 = May
+    const day = now.getDate();
+    if(month === 4){
+      const lastDayOfMonth = new Date(now.getFullYear(), 5, 0);
+      while(lastDayOfMonth.getDay() !== 1){ lastDayOfMonth.setDate(lastDayOfMonth.getDate()-1); }
+      const memDay = lastDayOfMonth.getDate();
+      if(day >= memDay - 2 && day <= memDay + 1){
+        const banner = document.getElementById('seasonalBanner');
+        if(banner) banner.classList.add('show');
+      }
     }
-  }
+  } catch(e){ console.warn('Seasonal banner error:', e); }
 
   // Stars
   resizeS();
@@ -1274,23 +1278,27 @@ async function init(){
   document.querySelectorAll('.section').forEach(s=>obs.observe(s));
 
   // Counters
-  new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting&&!cDone){
-      cDone=true;
-      document.querySelectorAll('.counter-num').forEach(el=>{
-        const target=parseInt(el.dataset.target);
-        const prefix=el.dataset.prefix||'',suffix=el.dataset.suffix||'';
-        const dur=2400,t0=performance.now();
-        (function tick(now){
-          const t=Math.min((now-t0)/dur,1);
-          const e=1-Math.pow(1-t,4);
-          el.textContent=prefix+Math.floor(e*target).toLocaleString()+suffix;
-          if(t<1)requestAnimationFrame(tick);
-          else el.textContent=prefix+target.toLocaleString()+suffix;
-        })(performance.now());
-      });
-    }
-  },{threshold:0.3}).observe(document.querySelector('.counter-strip'));
+  const counterStrip = document.querySelector('.counter-strip');
+  if(counterStrip){
+    new IntersectionObserver(entries=>{
+      if(entries[0].isIntersecting&&!cDone){
+        cDone=true;
+        document.querySelectorAll('.counter-num').forEach(el=>{
+          const target=parseInt(el.dataset.target);
+          if(!target) return;
+          const prefix=el.dataset.prefix||'',suffix=el.dataset.suffix||'';
+          const dur=2400,t0=performance.now();
+          (function tick(now){
+            const t=Math.min((now-t0)/dur,1);
+            const e=1-Math.pow(1-t,4);
+            el.textContent=prefix+Math.floor(e*target).toLocaleString()+suffix;
+            if(t<1)requestAnimationFrame(tick);
+            else el.textContent=prefix+target.toLocaleString()+suffix;
+          })(performance.now());
+        });
+      }
+    },{threshold:0.3}).observe(counterStrip);
+  }
 
   // Card glow
   document.querySelectorAll('.card').forEach(card=>{
