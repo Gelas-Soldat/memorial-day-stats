@@ -2900,7 +2900,7 @@ function runCompare(){
 async function init(){
   loadData(); // synchronous now — uses inline data immediately
 
-  // Show seasonal banner around Memorial Day (last Mon of May ± 2 days)
+  // Show seasonal banner around Memorial Day (last Mon of May — shown Sat before through day itself)
   try {
     const now = new Date();
     const month = now.getMonth(); // 4 = May
@@ -2909,7 +2909,7 @@ async function init(){
       const lastDayOfMonth = new Date(now.getFullYear(), 5, 0);
       while(lastDayOfMonth.getDay() !== 1){ lastDayOfMonth.setDate(lastDayOfMonth.getDate()-1); }
       const memDay = lastDayOfMonth.getDate();
-      if(day >= memDay - 2 && day <= memDay + 1){
+      if(day >= memDay - 2 && day <= memDay){
         const banner = document.getElementById('seasonalBanner');
         if(banner) banner.classList.add('show');
       }
