@@ -2304,13 +2304,17 @@ const mohStoriesData = [
   },
   {
     name:'Sal Giunta',rank:'Staff Sergeant',war:'Afghanistan',warKey:'Afghanistan',
-    wikiTitle:'Salvatore_Giunta',date:'October 25, 2007',
+    wikiTitle:'Salvatore_Giunta',
+    directImg:'https://media.defense.gov/2019/Mar/27/2002106374/1280/1280/0/190327-D-ZZ999-101.JPG',
+    date:'October 25, 2007',
     location:'Korengal Valley, Afghanistan',
     summary:`When his patrol was ambushed from both sides in the Korengal Valley, Giunta ran through gunfire to pull a wounded soldier to cover, then chased two Taliban fighters who had seized another wounded soldier — rescuing him before he could be taken. He became the first living recipient of the Medal of Honor since Vietnam. He said: "I'm not any more special than anyone else."`
   },
   {
     name:'Dakota Meyer',rank:'Sergeant',war:'Afghanistan',warKey:'Afghanistan',
-    wikiTitle:'Dakota_Meyer',date:'September 8, 2009',
+    wikiTitle:'Dakota_Meyer',
+    directImg:'https://media.defense.gov/2024/Sep/04/2003537400/1280/1280/0/110915-M-AR635-365Y.JPG',
+    date:'September 8, 2009',
     location:'Ganjgal Valley, Afghanistan',
     summary:`When a combined U.S.-Afghan patrol was ambushed and surrounded in the Ganjgal Valley, Meyer drove a gun truck into the kill zone five separate times — against direct orders — to rescue wounded soldiers and recover the fallen. He reached four American service members who had been killed in action and brought them home. He was 21 years old.`
   },
@@ -2322,7 +2326,9 @@ const mohStoriesData = [
   },
   {
     name:'Ross McGinnis',rank:'Private First Class',war:'Iraq',warKey:'Afghanistan',
-    wikiTitle:'Ross_McGinnis',date:'December 4, 2006',
+    wikiTitle:'Ross_McGinnis',
+    directImg:'https://media.defense.gov/2023/Nov/29/2003348593/1280/1280/0/231129-A-D0439-081A.JPG',
+    date:'December 4, 2006',
     location:'Adhamiyah, Baghdad, Iraq',
     summary:`An insurgent dropped a grenade through the gunner's hatch of McGinnis's Humvee. He was 19 years old. In the seconds he had, he didn't jump clear — he pinned the grenade against the radio mount with his body, absorbing the blast. All four soldiers in the vehicle survived. His parents accepted his Medal of Honor. His father said: "He didn't think twice. That was just Ross."`
   },
@@ -2417,9 +2423,11 @@ function warBadgeClass(warKey){
 async function buildStories(){
   storiesDone = true;
 
-  // Fetch all images in parallel
+  // Fetch all images in parallel — use directImg when hardcoded, else Wikipedia API
   const unitImgs = await Promise.all(unitStoriesData.map(u=>fetchWikiThumb(u.wikiTitle)));
-  const mohImgs  = await Promise.all(mohStoriesData.map(m=>fetchWikiThumb(m.wikiTitle)));
+  const mohImgs  = await Promise.all(mohStoriesData.map(m=>
+    m.directImg ? Promise.resolve(m.directImg) : fetchWikiThumb(m.wikiTitle)
+  ));
 
   // Render unit stories
   const unitGrid = document.getElementById('unitStoriesGrid');
