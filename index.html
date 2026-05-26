@@ -719,7 +719,45 @@ body{
 .unit-card-story p{margin-bottom:0.9em;}
 .unit-card-story p:last-child{margin-bottom:0;}
 
-/* MoH grid */
+/* Personal Stories */
+.personal-grid{display:flex;flex-direction:column;gap:20px;}
+.personal-card{
+  background:var(--glass);
+  border:0.5px solid var(--border);
+  border-left:3px solid var(--red);
+  border-radius:0 3px 3px 0;
+  padding:32px 36px;
+  transition:border-color 0.3s,background 0.3s;
+  opacity:0;animation:fadeUp 0.5s ease both;
+}
+.personal-card:hover{background:var(--glass2);border-color:var(--border2);border-left-color:var(--red);}
+.personal-card-icon{
+  font-size:28px;margin-bottom:14px;display:block;
+}
+.personal-card-title{
+  font-family:var(--font-serif);
+  font-size:clamp(18px,2vw,24px);
+  color:var(--white);font-weight:400;
+  margin-bottom:4px;
+}
+.personal-card-subtitle{
+  font-size:13px;color:var(--gold);
+  letter-spacing:0.06em;
+  font-family:var(--font-serif);
+  margin-bottom:20px;
+}
+.personal-card-body{
+  font-family:var(--font-serif);
+  font-size:16px;color:var(--white2);
+  line-height:1.9;
+}
+.personal-card-body p{margin-bottom:1em;}
+.personal-card-body p:last-child{margin-bottom:0;}
+
+@media(max-width:700px){
+  .personal-card{padding:24px 20px;}
+}
+
 .moh-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
@@ -1412,9 +1450,15 @@ body{
       <button class="toggle-tab" onclick="filterMoH('WWII',this)">WWII</button>
       <button class="toggle-tab" onclick="filterMoH('Korea',this)">Korea</button>
       <button class="toggle-tab" onclick="filterMoH('Vietnam',this)">Vietnam</button>
-      <button class="toggle-tab" onclick="filterMoH('Afghanistan',this)">Afghanistan</button>
+      <button class="toggle-tab" onclick="filterMoH('Afghanistan',this)">Iraq & Afghan</button>
     </div>
     <div id="mohGrid" class="moh-grid"></div>
+
+    <div class="stories-subhead-wrap" style="margin-top:64px;">
+      <h3 class="stories-subhead">Personal stories</h3>
+      <p class="stories-subhead-desc">Beyond the medals. Individual accounts drawn from official records, memoirs, and documented military history — the human moments the numbers don't capture.</p>
+    </div>
+    <div id="personalStoriesGrid" class="personal-grid"></div>
 
     <p style="font-size:13px;color:var(--white4);font-family:var(--font-serif);font-style:italic;margin-top:48px;text-align:center;line-height:1.8;">
       Photos sourced from Wikipedia (public domain / U.S. government works). Stories drawn from Medal of Honor citations, National Archives, and verified historical records.<br>
@@ -2197,9 +2241,9 @@ Of the 140 men who jumped into Normandy, only a handful finished the war without
     name:'Buffalo Soldiers',
     subtitle:'9th and 10th Cavalry Regiments',
     war:'Multiple',
-    // Henry O. Flipper: first Black graduate of West Point, served with Buffalo Soldiers.
-    // His famous 1877 graduation portrait is widely documented on Wikipedia.
-    wikiTitle:'Henry_O._Flipper',
+    // Benjamin O. Davis Sr.: first Black general in U.S. Army, career Buffalo Soldier.
+    // His official military portrait is well-documented on Wikipedia.
+    wikiTitle:'Benjamin_O._Davis_Sr.',
     facts:['Formed 1866','Lowest desertion rate in the Army','18 Medals of Honor'],
     story:`After the Civil War, Congress created six all-Black Army regiments — sent to the frontier, to the hardest postings the Army offered, under white officers who often considered the assignment a punishment.
 
@@ -2269,8 +2313,83 @@ const mohStoriesData = [
     wikiTitle:'Dakota_Meyer',date:'September 8, 2009',
     location:'Ganjgal Valley, Afghanistan',
     summary:`When a combined U.S.-Afghan patrol was ambushed and surrounded in the Ganjgal Valley, Meyer drove a gun truck into the kill zone five separate times — against direct orders — to rescue wounded soldiers and recover the fallen. He reached four American service members who had been killed in action and brought them home. He was 21 years old.`
+  },
+  {
+    name:'Hiroshi Miyamura',rank:'Corporal',war:'Korea',warKey:'Korea',
+    wikiTitle:'Hiroshi_Miyamura',date:'April 24–25, 1951',
+    location:'Near Taejon-ni, South Korea',
+    summary:`When his position was overrun, Miyamura — a Japanese-American and 442nd veteran — covered his squad's withdrawal by fighting off the enemy hand-to-hand, bayoneting those who came too close. He was captured and spent 28 months as a POW. His Medal of Honor citation was classified for two years because the government feared for his safety. His wife had no idea. He told her only after he came home.`
+  },
+  {
+    name:'Ross McGinnis',rank:'Private First Class',war:'Iraq',warKey:'Afghanistan',
+    wikiTitle:'Ross_McGinnis',date:'December 4, 2006',
+    location:'Adhamiyah, Baghdad, Iraq',
+    summary:`An insurgent dropped a grenade through the gunner's hatch of McGinnis's Humvee. He was 19 years old. In the seconds he had, he didn't jump clear — he pinned the grenade against the radio mount with his body, absorbing the blast. All four soldiers in the vehicle survived. His parents accepted his Medal of Honor. His father said: "He didn't think twice. That was just Ross."`
+  },
+  {
+    name:'Ben Salomon',rank:'Captain',war:'WWII',warKey:'WWII',
+    wikiTitle:'Ben_L._Salomon',date:'July 7, 1944',
+    location:'Saipan, Mariana Islands',
+    summary:`Salomon was an Army dentist — not a combat soldier. When the Japanese overran the aid station, he held the entrance alone so 30 wounded men could be carried to safety. He was found at his machine gun after the battle with 98 enemy dead in front of him and 76 bullet wounds. His Medal of Honor was denied for 57 years over technicalities about medical officers bearing arms. It was finally awarded in 2002.`
   }
 ];
+
+/* ── PERSONAL STORIES — individual accounts beyond the Medal of Honor ── */
+const personalStoriesData = [
+  {
+    title:'Five Brothers, One Ship',
+    subtitle:'The Sullivan Brothers · November 13, 1942',
+    war:'WWII',
+    icon:'⚓',
+    story:`George, Frank, Joe, Matt, and Al Sullivan enlisted together after Pearl Harbor. They insisted on serving together. The Navy granted it. On November 13, 1942, their ship — the USS Juneau — was hit by a torpedo in the waters off Guadalcanal. She sank in 20 seconds. All five brothers were killed.
+
+A Western Union telegram arrived at the Sullivan family home in Waterloo, Iowa on January 12, 1943. Their mother saw the three men in uniform walking up the front path and knew before they knocked.
+
+The loss of the Sullivan brothers led directly to the Sole Survivor Policy — a federal law that prevents the military from assigning the last surviving son (or the sole surviving child) to combat. The policy exists today because of what happened to one family in Iowa.
+
+Al Sullivan was 20. Matt was 23. Joe was 24. Frank was 26. George was 27.`
+  },
+  {
+    title:'The Wingman Who Crashed on Purpose',
+    subtitle:'Jesse Brown & Thomas Hudner · December 4, 1950',
+    war:'Korea',
+    icon:'✈',
+    story:`Ensign Jesse Brown was the U.S. Navy's first Black aviator. On December 4, 1950, he was shot down over the mountains of North Korea. His plane was burning. He was alive but trapped.
+
+His wingman, Lieutenant Tom Hudner, made a decision. He deliberately crash-landed his own plane on the mountainside — wheels up, without authorization — to try to reach Brown. He climbed out into the snow, tried to free him, sent for a rescue helicopter. The helicopter came. They couldn't get him out. Brown died on that mountain.
+
+Hudner was awarded the Medal of Honor for the attempt. He spent the next 60 years attending Jesse Brown memorial events, visiting Brown's family, and fighting to have a ship named after his friend. The USS Jesse L. Brown was commissioned in 1973. Hudner lived to see it.
+
+In 2013, at age 88, Hudner traveled to North Korea — still technically at war with the U.S. — hoping to find Brown's remains and bring him home. The remains were never found. Brown's wedding ring is still in the mountains of North Korea.`
+  },
+  {
+    title:'The Mare Who Made 75 Solo Runs',
+    subtitle:'Staff Sergeant Reckless · Spring 1953',
+    war:'Korea',
+    icon:'🐎',
+    story:`In 1952, the 5th Marine Regiment paid $250 for a chestnut mare from a Korean racetrack. They named her Reckless. She was trained to carry 75-pound ammunition packs to a recoilless rifle position and return for more.
+
+During the Battle of Outpost Vegas in March 1953, Reckless made 51 solo supply runs in a single day. By nightfall she had carried nearly five tons of ammunition. She knew the route. She loaded herself. When she returned to the supply point, Marines would re-load her and she would turn around without being led.
+
+She was wounded twice. She kept going. Marines fed her scrambled eggs, Coca-Cola, and beer. She slept in their tents.
+
+In April 1953 she was formally promoted to Staff Sergeant by the Commandant of the Marine Corps, making her one of only two animals in U.S. military history to be given a military rank for combat service. She retired to Camp Pendleton, California, where she spent the rest of her life.`
+  },
+  {
+    title:'The Lost Battalion',
+    subtitle:'Major Charles Whittlesey · October 1918',
+    war:'WWI',
+    icon:'✉',
+    story:`In October 1918, 554 men of the 77th Division advanced too far into the Argonne Forest and were surrounded by German forces on all sides. Their commander, Major Charles Whittlesey, sent out carrier pigeons calling for help. One by one the birds were shot down. On the fifth day, his last pigeon — Cher Ami — was shot through the breast and the leg but kept flying. She delivered the message. The rescue came.
+
+Of the 554 men who went in, 197 came out. Whittlesey received the Medal of Honor.
+
+He didn't celebrate it. He spent the years after the war answering letters from the families of the men who didn't make it home, trying to explain what had happened, why their sons had died. Friends said he couldn't sleep. He gave his Medal of Honor to one of his soldier's families.
+
+On November 26, 1921 — three years after the armistice — Whittlesey boarded an ocean liner and was never seen again. He was 36 years old. The ocean was the only answer he could find.`
+  }
+];
+
 
 // Fetch Wikipedia thumbnail using the MediaWiki Action API
 // More reliable than REST API — proper CORS via origin=*, no URL manipulation needed
@@ -2348,6 +2467,22 @@ async function buildStories(){
       <div class="moh-location">${m.location}</div>
     `;
     mohGrid.appendChild(card);
+  });
+
+  // Render personal stories
+  const personalGrid = document.getElementById('personalStoriesGrid');
+  personalStoriesData.forEach((s, i)=>{
+    const paras = s.story.split('\n\n').map(p=>`<p>${p}</p>`).join('');
+    const card = document.createElement('div');
+    card.className = 'personal-card';
+    card.style.animationDelay = (i*100)+'ms';
+    card.innerHTML = `
+      <span class="personal-card-icon">${s.icon}</span>
+      <div class="personal-card-title">${s.title}</div>
+      <div class="personal-card-subtitle">${s.subtitle}</div>
+      <div class="personal-card-body">${paras}</div>
+    `;
+    personalGrid.appendChild(card);
   });
 }
 
