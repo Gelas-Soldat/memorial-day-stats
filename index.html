@@ -840,6 +840,158 @@ body{
   .tab-section{padding:48px 20px 60px;}
 }
 
+  .deepdive-facts{grid-template-columns:repeat(2,1fr);}
+  .tab-section{padding:48px 20px 60px;}
+}
+
+/* ══ SHARE PANEL ══ */
+.hero-share-btn{
+  position:fixed;bottom:24px;right:24px;z-index:100;
+  background:var(--red);color:var(--white);
+  border:none;border-radius:3px;
+  padding:10px 18px;font-family:var(--font-serif);
+  font-size:14px;letter-spacing:0.06em;
+  cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,0.4);
+  transition:background 0.2s,transform 0.2s;
+}
+.hero-share-btn:hover{background:var(--red-soft);transform:translateY(-2px);}
+.share-panel{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;
+}
+.share-panel-inner{
+  background:var(--navy2);border:0.5px solid var(--border2);
+  border-radius:4px;padding:40px;max-width:480px;width:90%;
+  position:relative;
+}
+.share-close{
+  position:absolute;top:16px;right:16px;
+  background:transparent;border:none;
+  color:var(--white4);font-size:18px;cursor:pointer;
+  transition:color 0.2s;
+}
+.share-close:hover{color:var(--white);}
+.share-title{
+  font-family:var(--font-serif);font-size:22px;
+  color:var(--white);margin-bottom:8px;
+}
+.share-desc{font-family:var(--font-serif);font-size:15px;color:var(--white4);margin-bottom:24px;}
+.share-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+.share-btn{
+  padding:10px 18px;border-radius:3px;
+  font-family:var(--font-serif);font-size:14px;
+  cursor:pointer;border:none;text-decoration:none;
+  display:inline-block;transition:opacity 0.2s;
+}
+.share-btn:hover{opacity:0.85;}
+.share-twitter{background:#000;color:#fff;}
+.share-facebook{background:#1877f2;color:#fff;}
+.share-copy{background:var(--glass2);color:var(--white);border:0.5px solid var(--border2) !important;}
+.share-text-box{
+  background:rgba(255,255,255,0.04);border:0.5px solid var(--border);
+  border-radius:3px;padding:16px;
+  font-family:var(--font-serif);font-size:14px;
+  color:var(--white3);line-height:1.7;
+  user-select:all;cursor:text;
+}
+
+/* ══ SUBMIT FORM ══ */
+.submit-form{margin-top:8px;}
+.submit-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:0;}
+.submit-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.submit-label{
+  font-family:var(--font-serif);font-size:13px;
+  color:var(--white3);letter-spacing:0.04em;
+}
+.submit-input{
+  background:rgba(255,255,255,0.04);
+  border:0.5px solid var(--border2);
+  border-radius:3px;padding:12px 14px;
+  font-family:var(--font-serif);font-size:15px;
+  color:var(--white);outline:none;
+  transition:border-color 0.2s;width:100%;
+  box-sizing:border-box;
+}
+.submit-input:focus{border-color:var(--gold);}
+.submit-input::placeholder{color:var(--white4);}
+select.submit-input option{background:var(--navy2);color:var(--white);}
+.submit-textarea{resize:vertical;min-height:140px;}
+.submit-btn{
+  background:var(--red);color:var(--white);
+  border:none;border-radius:3px;
+  padding:14px 32px;font-family:var(--font-serif);
+  font-size:16px;cursor:pointer;letter-spacing:0.04em;
+  transition:background 0.2s;margin-top:4px;
+}
+.submit-btn:hover{background:var(--red-soft);}
+.submit-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.submit-note{
+  font-family:var(--font-serif);font-size:14px;
+  color:var(--gold);margin-top:12px;min-height:20px;
+}
+
+/* ══ COMPARE TOOL ══ */
+.compare-selectors{
+  display:grid;grid-template-columns:1fr auto 1fr;
+  gap:20px;align-items:end;margin-bottom:40px;
+}
+.compare-picker{display:flex;flex-direction:column;gap:8px;}
+.compare-picker-label{
+  font-family:var(--font-serif);font-size:12px;
+  color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;
+}
+.compare-select{
+  background:rgba(255,255,255,0.04);
+  border:0.5px solid var(--border2);
+  border-radius:3px;padding:14px 16px;
+  font-family:var(--font-serif);font-size:16px;
+  color:var(--white);outline:none;
+  cursor:pointer;transition:border-color 0.2s;width:100%;
+}
+.compare-select option{background:var(--navy2);}
+.compare-select:focus{border-color:var(--gold);}
+.compare-vs{
+  font-family:var(--font-serif);font-size:22px;
+  color:var(--white4);text-align:center;padding-bottom:14px;
+}
+.compare-prompt{
+  font-family:var(--font-serif);font-size:16px;
+  color:var(--white4);font-style:italic;
+  text-align:center;padding:40px 0;
+}
+.compare-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+}
+.compare-metric{
+  background:var(--glass);border:0.5px solid var(--border);
+  border-radius:3px;padding:20px;
+  opacity:0;animation:fadeUp 0.4s ease both;
+}
+.compare-metric-label{
+  font-size:11px;color:var(--white4);
+  letter-spacing:0.12em;text-transform:uppercase;
+  margin-bottom:12px;font-family:var(--font-serif);
+}
+.compare-bar-row{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;}
+.compare-bar-row:last-child{margin-bottom:0;}
+.compare-bar-name{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;}
+.compare-bar-label{font-size:13px;color:var(--white2);font-family:var(--font-serif);}
+.compare-bar-val{font-size:13px;color:var(--white);font-family:var(--font-serif);}
+.compare-bar-track{height:8px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.compare-bar-fill{height:100%;border-radius:2px;transition:width 1s cubic-bezier(0.4,0,0.2,1);}
+.compare-winner{
+  font-size:11px;color:var(--gold);letter-spacing:0.08em;
+  text-transform:uppercase;margin-top:12px;font-family:var(--font-serif);
+}
+@media(max-width:700px){
+  .compare-selectors{grid-template-columns:1fr;gap:12px;}
+  .compare-vs{padding:0;}
+  .compare-grid{grid-template-columns:1fr;}
+  .submit-row{grid-template-columns:1fr;}
+  .share-btns{flex-direction:column;}
+}
+
 .tab-nav{
   background:rgba(11,17,32,0.92);
   backdrop-filter:blur(16px);
@@ -1133,7 +1285,29 @@ body{
     <div class="scroll-line"></div>
     <span class="scroll-text">Scroll to explore</span>
   </div>
+
+  <!-- Share button -->
+  <button class="hero-share-btn" onclick="openSharePanel()" aria-label="Share this page">
+    ↑ Share
+  </button>
 </section>
+
+<!-- Share panel -->
+<div class="share-panel" id="sharePanel" style="display:none;">
+  <div class="share-panel-inner">
+    <button class="share-close" onclick="closeSharePanel()">✕</button>
+    <div class="share-title">Share fallen.memorial</div>
+    <p class="share-desc">Help more people see this on Memorial Day.</p>
+    <div class="share-btns">
+      <a class="share-btn share-twitter" href="#" onclick="shareTwitter();return false;">Post on X / Twitter</a>
+      <a class="share-btn share-facebook" href="#" onclick="shareFacebook();return false;">Share on Facebook</a>
+      <button class="share-btn share-copy" onclick="copyShareText()">Copy text</button>
+    </div>
+    <div class="share-text-box" id="shareTextBox">
+      Every number on this page was a person. fallen.memorial tracks U.S. military deaths from the Revolutionary War to today — adjusted for population, the Civil War was 75x more deadly than Iraq/Afghanistan. Interactive data + Medal of Honor stories. fallen.memorial
+    </div>
+  </div>
+</div>
 
 <!-- SEASONAL MEMORIAL DAY BANNER — shown only around Memorial Day -->
 <div class="seasonal-banner" id="seasonalBanner">
@@ -1198,6 +1372,7 @@ body{
     <button class="tab-btn" data-tab="onthisday" onclick="switchTab('onthisday',this)">On This Day</button>
     <button class="tab-btn" data-tab="story" onclick="switchTab('story',this)">The Story</button>
     <button class="tab-btn" data-tab="stories" onclick="switchTab('stories',this)">Stories</button>
+    <button class="tab-btn" data-tab="compare" onclick="switchTab('compare',this)">Compare Wars</button>
   </div>
 </nav>
 
@@ -1464,6 +1639,84 @@ body{
       Photos sourced from Wikipedia (public domain / U.S. government works). Stories drawn from Medal of Honor citations, National Archives, and verified historical records.<br>
       The Medal of Honor has been awarded 3,527 times since the Civil War.
     </p>
+
+    <!-- Submit a Story form -->
+    <div class="stories-subhead-wrap" style="margin-top:64px;padding-top:48px;border-top:0.5px solid var(--border);">
+      <h3 class="stories-subhead">Submit a story</h3>
+      <p class="stories-subhead-desc">Know a veteran whose story deserves to be told? A family member who served? Send it here and we'll review it for inclusion. All submissions are verified before publishing.</p>
+    </div>
+    <form class="submit-form" id="submitForm" onsubmit="handleSubmit(event)">
+      <div class="submit-row">
+        <div class="submit-field">
+          <label class="submit-label">Name of the veteran or soldier *</label>
+          <input class="submit-input" type="text" name="veteran_name" required placeholder="e.g. John Smith">
+        </div>
+        <div class="submit-field">
+          <label class="submit-label">Conflict or war *</label>
+          <select class="submit-input" name="conflict" required>
+            <option value="">Select a conflict</option>
+            <option>Revolutionary War</option>
+            <option>Civil War</option>
+            <option>World War I</option>
+            <option>World War II</option>
+            <option>Korean War</option>
+            <option>Vietnam War</option>
+            <option>Iraq / Afghanistan</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="submit-field">
+        <label class="submit-label">Your relationship to this person *</label>
+        <input class="submit-input" type="text" name="relationship" required placeholder="e.g. granddaughter, historian, fellow veteran">
+      </div>
+      <div class="submit-field">
+        <label class="submit-label">Their story *</label>
+        <textarea class="submit-input submit-textarea" name="story" required placeholder="Tell us who they were and what they did. The more detail the better — specific dates, locations, and events help us verify and tell the story well." rows="7"></textarea>
+      </div>
+      <div class="submit-row">
+        <div class="submit-field">
+          <label class="submit-label">Sources or documentation (optional)</label>
+          <input class="submit-input" type="text" name="sources" placeholder="e.g. NARA records, family letters, newspaper clippings">
+        </div>
+        <div class="submit-field">
+          <label class="submit-label">Your email (optional, for follow-up)</label>
+          <input class="submit-input" type="email" name="email" placeholder="hello@example.com">
+        </div>
+      </div>
+      <button class="submit-btn" type="submit" id="submitBtn">Send story →</button>
+      <p class="submit-note" id="submitMsg"></p>
+    </form>
+  </div>
+</div>
+
+<!-- TAB: COMPARE WARS -->
+<div class="tab-content" id="tab-compare">
+  <div class="tab-section">
+    <p class="section-eyebrow">Side by Side</p>
+    <h2 class="section-title">Compare any two conflicts</h2>
+    <p class="section-desc">Select two wars to see how they stack up across every major metric.</p>
+
+    <div class="compare-selectors">
+      <div class="compare-picker">
+        <label class="compare-picker-label">War A</label>
+        <select class="compare-select" id="compareA" onchange="runCompare()">
+          <option value="">Select a war</option>
+        </select>
+      </div>
+      <div class="compare-vs">vs</div>
+      <div class="compare-picker">
+        <label class="compare-picker-label">War B</label>
+        <select class="compare-select" id="compareB" onchange="runCompare()">
+          <option value="">Select a war</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="compareResult" class="compare-result" style="display:none;">
+      <div class="compare-grid" id="compareGrid"></div>
+    </div>
+    <p id="comparePrompt" class="compare-prompt">Select two wars above to begin the comparison.</p>
   </div>
 </div>
 
@@ -1884,6 +2137,7 @@ function switchTab(id, btn){
   if(id==='deepdives' && !deepDone) buildDeepDives();
   if(id==='onthisday' && !otdDone) buildOnThisDay();
   if(id==='stories' && !storiesDone) buildStories();
+  if(id==='compare') initCompare();
 }
 
 /* ── STATE DATA ── */
@@ -2503,6 +2757,222 @@ function filterMoH(war, btn){
     } else {
       card.classList.add('hidden');
     }
+  });
+}
+
+/* ── SHARE PANEL ── */
+function openSharePanel(){ document.getElementById('sharePanel').style.display='flex'; }
+function closeSharePanel(){ document.getElementById('sharePanel').style.display='none'; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeSharePanel(); });
+
+const SHARE_TEXT = `Every number on this page was a person. fallen.memorial tracks U.S. military deaths from the Revolutionary War to today — adjusted for population, the Civil War was 75x more deadly than Iraq/Afghanistan. Interactive data, Medal of Honor stories, and personal accounts. fallen.memorial`;
+const SHARE_URL = 'https://fallen.memorial';
+
+function shareTwitter(){
+  const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(SHARE_TEXT)}&url=${encodeURIComponent(SHARE_URL)}`;
+  window.open(url,'_blank','noopener,width=600,height=450');
+}
+function shareFacebook(){
+  const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(SHARE_URL)}`;
+  window.open(url,'_blank','noopener,width=600,height=450');
+}
+function copyShareText(){
+  const text = SHARE_TEXT + ' ' + SHARE_URL;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = document.querySelector('.share-copy');
+    const orig = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    setTimeout(()=>btn.textContent=orig, 2000);
+  }).catch(()=>{
+    document.getElementById('shareTextBox').focus();
+    document.execCommand('selectAll');
+  });
+}
+
+/* ── SUBMIT STORY FORM ── */
+async function handleSubmit(e){
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const msg = document.getElementById('submitMsg');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  msg.textContent = '';
+
+  const form = e.target;
+  const data = {
+    veteran_name: form.veteran_name.value,
+    conflict: form.conflict.value,
+    relationship: form.relationship.value,
+    story: form.story.value,
+    sources: form.sources?.value || '',
+    email: form.email?.value || '',
+    submitted_at: new Date().toISOString(),
+    page: 'fallen.memorial'
+  };
+
+  // Send via Formspree — replace YOUR_FORM_ID after creating account at formspree.io
+  try {
+    const res = await fetch('https://formspree.io/f/mdajwwep', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(data)
+    });
+    if(res.ok){
+      msg.textContent = 'Thank you — we received the story and will review it carefully.';
+      msg.style.color = 'var(--gold)';
+      form.reset();
+    } else {
+      throw new Error('Server error');
+    }
+  } catch(err){
+    // Fallback: open mailto link with pre-filled content
+    const subject = encodeURIComponent(`Story submission: ${data.veteran_name}`);
+    const body = encodeURIComponent(
+      `Veteran: ${data.veteran_name}\nConflict: ${data.conflict}\nRelationship: ${data.relationship}\n\nStory:\n${data.story}\n\nSources: ${data.sources}\nContact: ${data.email}`
+    );
+    window.location.href = `mailto:hello@fallen.memorial?subject=${subject}&body=${body}`;
+    msg.textContent = 'Opening your email client to send the story...';
+    msg.style.color = 'var(--white3)';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Send story →';
+}
+
+/* ── COMPARE WARS TOOL ── */
+function initCompare(){
+  const selA = document.getElementById('compareA');
+  const selB = document.getElementById('compareB');
+  if(!selA || !selB || !wars.length) return;
+  wars.forEach(w=>{
+    [selA,selB].forEach(sel=>{
+      const opt = document.createElement('option');
+      opt.value = w.name;
+      opt.textContent = w.full;
+      sel.appendChild(opt);
+    });
+  });
+  // Default selections
+  if(wars.length >= 4){
+    selA.value = wars[3].name; // Civil War
+    selB.value = wars[5].name; // WWII
+    runCompare();
+  }
+}
+
+function runCompare(){
+  const selA = document.getElementById('compareA');
+  const selB = document.getElementById('compareB');
+  const result = document.getElementById('compareResult');
+  const prompt = document.getElementById('comparePrompt');
+  const grid = document.getElementById('compareGrid');
+
+  if(!selA.value || !selB.value || selA.value === selB.value){
+    result.style.display='none';
+    prompt.style.display='block';
+    prompt.textContent = selA.value === selB.value ? 'Please select two different wars.' : 'Select two wars above to begin the comparison.';
+    return;
+  }
+
+  const wA = wars.find(w=>w.name===selA.value);
+  const wB = wars.find(w=>w.name===selB.value);
+  if(!wA || !wB) return;
+
+  result.style.display='block';
+  prompt.style.display='none';
+  grid.innerHTML='';
+
+  const costA = (costData.find(c=>c.label===wA.name)||{cost:0}).cost;
+  const costB = (costData.find(c=>c.label===wB.name)||{cost:0}).cost;
+  const causeA = causeWars.find(c=>c.name===wA.name)||{battle:wA.battle,disease:wA.other};
+  const causeB = causeWars.find(c=>c.name===wB.name)||{battle:wB.battle,disease:wB.other};
+
+  const metrics = [
+    {
+      label:'Battle Deaths',
+      a:{val:wA.battle,label:wA.full.split(' ').slice(0,2).join(' ')},
+      b:{val:wB.battle,label:wB.full.split(' ').slice(0,2).join(' ')},
+      fmt:v=>v.toLocaleString(),
+      winner:wA.battle>wB.battle?'a':'b',
+      winnerText:wA.battle>wB.battle?wA.name+' had more battle deaths':wB.name+' had more battle deaths'
+    },
+    {
+      label:'% of U.S. Population',
+      a:{val:wA.popPct,label:wA.full.split(' ').slice(0,2).join(' ')},
+      b:{val:wB.popPct,label:wB.full.split(' ').slice(0,2).join(' ')},
+      fmt:v=>v.toFixed(3)+'%',
+      winner:wA.popPct>wB.popPct?'a':'b',
+      winnerText:'Proportionally heavier burden on the nation'
+    },
+    {
+      label:'Duration',
+      a:{val:wA.days,label:wA.full.split(' ').slice(0,2).join(' ')},
+      b:{val:wB.days,label:wB.full.split(' ').slice(0,2).join(' ')},
+      fmt:v=>Math.round(v/365*10)/10+' years',
+      winner:wA.days>wB.days?'a':'b',
+      winnerText:'Longer conflict'
+    },
+    {
+      label:'Deaths Per Day',
+      a:{val:Math.round(wA.battle/wA.days*10)/10,label:wA.full.split(' ').slice(0,2).join(' ')},
+      b:{val:Math.round(wB.battle/wB.days*10)/10,label:wB.full.split(' ').slice(0,2).join(' ')},
+      fmt:v=>v.toFixed(1)+'/day',
+      winner:(wA.battle/wA.days)>(wB.battle/wB.days)?'a':'b',
+      winnerText:'Higher daily death rate'
+    },
+    {
+      label:'Wounded',
+      a:{val:wA.wounded,label:wA.full.split(' ').slice(0,2).join(' ')},
+      b:{val:wB.wounded,label:wB.full.split(' ').slice(0,2).join(' ')},
+      fmt:v=>v.toLocaleString(),
+      winner:wA.wounded>wB.wounded?'a':'b',
+      winnerText:'More soldiers wounded'
+    },
+    {
+      label:'Cost per Death (2023 USD)',
+      a:{val:costA,label:wA.full.split(' ').slice(0,2).join(' ')},
+      b:{val:costB,label:wB.full.split(' ').slice(0,2).join(' ')},
+      fmt:v=>v>=1?'$'+Math.round(v).toLocaleString()+'M':'$'+(v*1000000).toFixed(0),
+      winner:costA>costB?'a':'b',
+      winnerText:'Higher economic cost per life'
+    }
+  ];
+
+  metrics.forEach((m,i)=>{
+    const maxVal = Math.max(m.a.val, m.b.val) || 1;
+    const pctA = (m.a.val / maxVal * 100).toFixed(1);
+    const pctB = (m.b.val / maxVal * 100).toFixed(1);
+    const colorA = 'rgba(74,122,181,0.75)';
+    const colorB = 'rgba(178,34,52,0.7)';
+
+    const card = document.createElement('div');
+    card.className = 'compare-metric';
+    card.style.animationDelay = (i*80)+'ms';
+    card.innerHTML = `
+      <div class="compare-metric-label">${m.label}</div>
+      <div class="compare-bar-row">
+        <div class="compare-bar-name">
+          <span class="compare-bar-label">${m.a.label}</span>
+          <span class="compare-bar-val">${m.fmt(m.a.val)}</span>
+        </div>
+        <div class="compare-bar-track"><div class="compare-bar-fill" style="background:${colorA};width:0%" data-pct="${pctA}"></div></div>
+      </div>
+      <div class="compare-bar-row">
+        <div class="compare-bar-name">
+          <span class="compare-bar-label">${m.b.label}</span>
+          <span class="compare-bar-val">${m.fmt(m.b.val)}</span>
+        </div>
+        <div class="compare-bar-track"><div class="compare-bar-fill" style="background:${colorB};width:0%" data-pct="${pctB}"></div></div>
+      </div>
+      <div class="compare-winner">${m.winnerText}</div>
+    `;
+    grid.appendChild(card);
+    // Animate bars after DOM insert
+    requestAnimationFrame(()=>{
+      card.querySelectorAll('.compare-bar-fill').forEach(bar=>{
+        bar.style.width = bar.dataset.pct + '%';
+      });
+    });
   });
 }
 
