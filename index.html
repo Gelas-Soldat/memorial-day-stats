@@ -1285,29 +1285,7 @@ select.submit-input option{background:var(--navy2);color:var(--white);}
     <div class="scroll-line"></div>
     <span class="scroll-text">Scroll to explore</span>
   </div>
-
-  <!-- Share button -->
-  <button class="hero-share-btn" onclick="openSharePanel()" aria-label="Share this page">
-    ↑ Share
-  </button>
 </section>
-
-<!-- Share panel -->
-<div class="share-panel" id="sharePanel" style="display:none;">
-  <div class="share-panel-inner">
-    <button class="share-close" onclick="closeSharePanel()">✕</button>
-    <div class="share-title">Share fallen.memorial</div>
-    <p class="share-desc">Help more people see this on Memorial Day.</p>
-    <div class="share-btns">
-      <a class="share-btn share-twitter" href="#" onclick="shareTwitter();return false;">Post on X / Twitter</a>
-      <a class="share-btn share-facebook" href="#" onclick="shareFacebook();return false;">Share on Facebook</a>
-      <button class="share-btn share-copy" onclick="copyShareText()">Copy text</button>
-    </div>
-    <div class="share-text-box" id="shareTextBox">
-      Every number on this page was a person. fallen.memorial tracks U.S. military deaths from the Revolutionary War to today — adjusted for population, the Civil War was 75x more deadly than Iraq/Afghanistan. Interactive data + Medal of Honor stories. fallen.memorial
-    </div>
-  </div>
-</div>
 
 <!-- SEASONAL MEMORIAL DAY BANNER — shown only around Memorial Day -->
 <div class="seasonal-banner" id="seasonalBanner">
@@ -2812,7 +2790,7 @@ async function handleSubmit(e){
 
   // Send via Formspree — replace YOUR_FORM_ID after creating account at formspree.io
   try {
-    const res = await fetch('https://formspree.io/f/mdajwwep', {
+    const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify(data)
@@ -3090,5 +3068,23 @@ async function init(){
 
 init();
 </script>
+<!-- Share button — outside main/footer so position:fixed works correctly -->
+<button class="hero-share-btn" onclick="openSharePanel()" aria-label="Share this page">↑ Share</button>
+
+<!-- Share panel overlay -->
+<div class="share-panel" id="sharePanel" style="display:none;" onclick="if(event.target===this)closeSharePanel()">
+  <div class="share-panel-inner">
+    <button class="share-close" onclick="closeSharePanel()">✕</button>
+    <div class="share-title">Share fallen.memorial</div>
+    <p class="share-desc">Help more people see this on Memorial Day.</p>
+    <div class="share-btns">
+      <a class="share-btn share-twitter" href="#" onclick="shareTwitter();return false;">Post on X / Twitter</a>
+      <a class="share-btn share-facebook" href="#" onclick="shareFacebook();return false;">Share on Facebook</a>
+      <button class="share-btn share-copy" onclick="copyShareText()">Copy text</button>
+    </div>
+    <div class="share-text-box" id="shareTextBox">Every number on this page was a person. fallen.memorial tracks U.S. military deaths from the Revolutionary War to today — adjusted for population, the Civil War was 75x more deadly than Iraq/Afghanistan. Interactive data + Medal of Honor stories. fallen.memorial</div>
+  </div>
+</div>
+
 </body>
 </html>
