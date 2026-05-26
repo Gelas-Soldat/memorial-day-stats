@@ -140,9 +140,11 @@ body{
   color:var(--white);
   font-family:var(--font-serif);
   font-weight:400;line-height:1.85;
-  min-height:100vh;overflow-x:hidden;
+  min-height:100vh;
   font-size:20px;
 }
+/* Prevent horizontal scroll without clipping fixed elements */
+html{overflow-x:hidden;}
 
 /* ── FIXED BG ── */
 .bg-base{
@@ -2124,6 +2126,9 @@ function switchTab(id, btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   if(btn) btn.classList.add('active');
+  // Scroll to tab nav so user sees full content from the top
+  const nav = document.getElementById('tabNav');
+  if(nav) nav.scrollIntoView({behavior:'smooth', block:'start'});
   if(id==='bystate' && !stateDone) buildStateBars();
   if(id==='deepdives' && !deepDone) buildDeepDives();
   if(id==='onthisday' && !otdDone) buildOnThisDay();
