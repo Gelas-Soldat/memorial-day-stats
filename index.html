@@ -1812,7 +1812,11 @@ function applyData(d){
     // Show last-updated badge
     const badge = document.getElementById('lastUpdated');
     if(badge && d.meta && d.meta.last_updated){
-      badge.textContent = 'Data last updated: ' + d.meta.last_updated;
+      // Parse as local date (not UTC) to avoid timezone day-offset issues
+      const parts = d.meta.last_updated.split('-');
+      const localDate = new Date(+parts[0], +parts[1]-1, +parts[2]);
+      const formatted = localDate.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+      badge.textContent = 'Data verified: ' + formatted;
       badge.style.opacity = '1';
     }
 }
