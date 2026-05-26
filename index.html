@@ -846,18 +846,19 @@ body{
 
 /* ══ SHARE PANEL ══ */
 .hero-share-btn{
-  position:fixed;bottom:24px;right:24px;z-index:100;
+  position:fixed;bottom:28px;right:28px;z-index:9999;
   background:var(--red);color:var(--white);
   border:none;border-radius:3px;
-  padding:10px 18px;font-family:var(--font-serif);
+  padding:11px 20px;font-family:var(--font-serif);
   font-size:14px;letter-spacing:0.06em;
-  cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,0.4);
+  cursor:pointer;
+  box-shadow:0 4px 24px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.08);
   transition:background 0.2s,transform 0.2s;
 }
 .hero-share-btn:hover{background:var(--red-soft);transform:translateY(-2px);}
 .share-panel{
-  position:fixed;inset:0;z-index:200;
-  background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);
+  position:fixed;inset:0;z-index:99999;
+  background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);
   display:flex;align-items:center;justify-content:center;
 }
 .share-panel-inner{
@@ -1016,6 +1017,12 @@ select.submit-input option{background:var(--navy2);color:var(--white);}
 }
 .tab-btn:hover{color:var(--white2);}
 .tab-btn.active{color:var(--white);border-bottom-color:var(--red);}
+.tab-btn-share{
+  color:var(--red-soft) !important;
+  border-bottom-color:transparent !important;
+  margin-left:auto;
+}
+.tab-btn-share:hover{color:var(--red) !important;}
 
 /* ══ TAB CONTENT ══ */
 .tab-content{display:none;}
@@ -1351,6 +1358,8 @@ select.submit-input option{background:var(--navy2);color:var(--white);}
     <button class="tab-btn" data-tab="story" onclick="switchTab('story',this)">The Story</button>
     <button class="tab-btn" data-tab="stories" onclick="switchTab('stories',this)">Stories</button>
     <button class="tab-btn" data-tab="compare" onclick="switchTab('compare',this)">Compare Wars</button>
+    <button class="tab-btn" data-tab="submit" onclick="switchTab('submit',this)">Submit a Story</button>
+    <button class="tab-btn tab-btn-share" onclick="openSharePanel()">↑ Share</button>
   </div>
 </nav>
 
@@ -1617,12 +1626,16 @@ select.submit-input option{background:var(--navy2);color:var(--white);}
       Photos sourced from Wikipedia (public domain / U.S. government works). Stories drawn from Medal of Honor citations, National Archives, and verified historical records.<br>
       The Medal of Honor has been awarded 3,527 times since the Civil War.
     </p>
+  </div>
+</div>
 
-    <!-- Submit a Story form -->
-    <div class="stories-subhead-wrap" style="margin-top:64px;padding-top:48px;border-top:0.5px solid var(--border);">
-      <h3 class="stories-subhead">Submit a story</h3>
-      <p class="stories-subhead-desc">Know a veteran whose story deserves to be told? A family member who served? Send it here and we'll review it for inclusion. All submissions are verified before publishing.</p>
-    </div>
+<!-- TAB: SUBMIT A STORY -->
+<div class="tab-content" id="tab-submit">
+  <div class="tab-section">
+    <p class="section-eyebrow">Your Stories</p>
+    <h2 class="section-title">Submit a story</h2>
+    <p class="section-desc">Know a veteran whose story deserves to be told? A family member who served? Send it here — we'll review every submission and reach out if we're able to include it. All stories are verified before publishing.</p>
+
     <form class="submit-form" id="submitForm" onsubmit="handleSubmit(event)">
       <div class="submit-row">
         <div class="submit-field">
@@ -1650,7 +1663,7 @@ select.submit-input option{background:var(--navy2);color:var(--white);}
       </div>
       <div class="submit-field">
         <label class="submit-label">Their story *</label>
-        <textarea class="submit-input submit-textarea" name="story" required placeholder="Tell us who they were and what they did. The more detail the better — specific dates, locations, and events help us verify and tell the story well." rows="7"></textarea>
+        <textarea class="submit-input submit-textarea" name="story" required placeholder="Tell us who they were and what they did. The more detail the better — specific dates, locations, and events help us verify and tell the story well." rows="8"></textarea>
       </div>
       <div class="submit-row">
         <div class="submit-field">
@@ -1659,7 +1672,7 @@ select.submit-input option{background:var(--navy2);color:var(--white);}
         </div>
         <div class="submit-field">
           <label class="submit-label">Your email (optional, for follow-up)</label>
-          <input class="submit-input" type="email" name="email" placeholder="hello@example.com">
+          <input class="submit-input" type="email" name="email" placeholder="your@email.com">
         </div>
       </div>
       <button class="submit-btn" type="submit" id="submitBtn">Send story →</button>
@@ -1711,7 +1724,7 @@ select.submit-input option{background:var(--navy2);color:var(--white);}
     <strong style="color:var(--white);letter-spacing:0.1em;text-transform:uppercase;font-size:13px;display:block;margin-bottom:12px;">Disclaimer</strong>
     This dashboard is an independent, unofficial project created for educational and memorial purposes. It is not affiliated with, endorsed by, or produced by the U.S. Department of Veterans Affairs, the Department of Defense, or any government agency. While data is sourced from official government publications, figures may vary slightly across sources and should not be cited as definitive. Some estimates — particularly cost-per-death calculations — are approximations based on publicly available research.
     <br><br>
-    Data is presented in good faith based on publicly available government records. If you believe any figure is inaccurate, it is not intentional — please <a href="https://ryandesigns.dev/#contact" target="_blank" rel="noopener noreferrer" style="color:var(--white);border-bottom:1px solid rgba(240,236,226,0.35);padding-bottom:1px;text-decoration:none;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(240,236,226,0.8)';" onmouseout="this.style.borderColor='rgba(240,236,226,0.35)';">contact us</a> so we can review and correct it promptly.
+    Data is presented in good faith based on publicly available government records. If you believe any figure is inaccurate, it is not intentional — please <a id="contact-link" href="#" style="color:var(--white);border-bottom:1px solid rgba(240,236,226,0.35);padding-bottom:1px;text-decoration:none;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(240,236,226,0.8)';" onmouseout="this.style.borderColor='rgba(240,236,226,0.35)';">contact us</a> so we can review and correct it promptly.
   </div>
 
   <div style="margin-top:24px;font-size:16px;color:var(--white2);">
@@ -2116,6 +2129,8 @@ function switchTab(id, btn){
   if(id==='onthisday' && !otdDone) buildOnThisDay();
   if(id==='stories' && !storiesDone) buildStories();
   if(id==='compare') initCompare();
+  // 'submit' tab needs no lazy init — form is static HTML
+}
 }
 
 /* ── STATE DATA ── */
@@ -2804,11 +2819,12 @@ async function handleSubmit(e){
     }
   } catch(err){
     // Fallback: open mailto link with pre-filled content
+    const em = ['hello','fallen.memorial'].join('@');
     const subject = encodeURIComponent(`Story submission: ${data.veteran_name}`);
     const body = encodeURIComponent(
       `Veteran: ${data.veteran_name}\nConflict: ${data.conflict}\nRelationship: ${data.relationship}\n\nStory:\n${data.story}\n\nSources: ${data.sources}\nContact: ${data.email}`
     );
-    window.location.href = `mailto:hello@fallen.memorial?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${em}?subject=${subject}&body=${body}`;
     msg.textContent = 'Opening your email client to send the story...';
     msg.style.color = 'var(--white3)';
   }
@@ -3065,6 +3081,14 @@ async function init(){
     });
   });
 }
+
+  // Email obfuscation — builds hello@fallen.memorial at runtime
+  // Bots scraping HTML see only id="contact-link" href="#" with no address
+  (function(){
+    const u='hello', d='fallen'+'\u002e'+'memorial';
+    const a=document.getElementById('contact-link');
+    if(a){ a.href='mailto:'+u+'@'+d; a.title=u+'@'+d; }
+  })();
 
 init();
 </script>
