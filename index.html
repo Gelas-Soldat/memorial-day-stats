@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Privacy-friendly analytics by Plausible -->
-<script async src="https://plausible.io/js/pa-6TRJyndpgebsTW_KWoQ_q.js"></script>
-<script>
-  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-  plausible.init()
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -854,7 +848,7 @@ html{overflow-x:hidden;}
 
 /* ══ SHARE PANEL ══ */
 .hero-share-btn{
-  position:fixed;bottom:28px;right:28px;z-index:9999;
+  position:fixed;bottom:28px;left:28px;z-index:9999;
   background:var(--red);color:var(--white);
   border:none;border-radius:3px;
   padding:11px 20px;font-family:var(--font-serif);
@@ -1008,29 +1002,23 @@ select.submit-input option{background:var(--navy2);color:var(--white);}
   position:sticky;top:0;z-index:50;
 }
 .tab-nav-inner{
-  max-width:960px;margin:0 auto;
+  max-width:1100px;margin:0 auto;
   display:flex;gap:0;overflow-x:auto;
   scrollbar-width:none;
 }
 .tab-nav-inner::-webkit-scrollbar{display:none;}
 .tab-btn{
-  padding:16px 24px;
+  padding:15px 18px;
   background:transparent;
   border:none;border-bottom:2px solid transparent;
   color:var(--white4);
   font-family:var(--font-serif);
-  font-size:14px;letter-spacing:0.06em;
+  font-size:13px;letter-spacing:0.05em;
   cursor:pointer;white-space:nowrap;
   transition:color 0.3s,border-color 0.3s;
 }
 .tab-btn:hover{color:var(--white2);}
 .tab-btn.active{color:var(--white);border-bottom-color:var(--red);}
-.tab-btn-share{
-  color:var(--red-soft) !important;
-  border-bottom-color:transparent !important;
-  margin-left:auto;
-}
-.tab-btn-share:hover{color:var(--red) !important;}
 
 /* ══ TAB CONTENT ══ */
 .tab-content{display:none;}
@@ -1254,6 +1242,12 @@ select.submit-input option{background:var(--navy2);color:var(--white);}
   border-top:0.5px solid var(--border);
 }
 </style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-6TRJyndpgebsTW_KWoQ_q.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
 </head>
 <body>
 
@@ -1367,7 +1361,6 @@ select.submit-input option{background:var(--navy2);color:var(--white);}
     <button class="tab-btn" data-tab="stories" onclick="switchTab('stories',this)">Stories</button>
     <button class="tab-btn" data-tab="compare" onclick="switchTab('compare',this)">Compare Wars</button>
     <button class="tab-btn" data-tab="submit" onclick="switchTab('submit',this)">Submit a Story</button>
-    <button class="tab-btn tab-btn-share" onclick="openSharePanel()">↑ Share</button>
   </div>
 </nav>
 
