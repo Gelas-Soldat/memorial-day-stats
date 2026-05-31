@@ -64,6 +64,279 @@
 
 <!-- Chart.js loaded dynamically when user reaches the charts section -->
 <style>
+  /* ── MoH Search ──────────────────────────────────────────────── */
+#moh-search {
+  padding: 4rem 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+ 
+.moh-search-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+ 
+.moh-search-header h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+ 
+.moh-search-header p {
+  opacity: 0.6;
+  font-size: 0.95rem;
+}
+ 
+/* Search input */
+.moh-search-box {
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+ 
+.moh-search-box input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  color: inherit;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s, background 0.2s;
+  box-sizing: border-box;
+}
+ 
+.moh-search-box input:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.08);
+}
+ 
+.moh-search-box input::placeholder {
+  opacity: 0.4;
+}
+ 
+.moh-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.4;
+  pointer-events: none;
+}
+ 
+/* War filter tabs */
+.moh-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+ 
+.moh-filter-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.82rem;
+  font-family: inherit;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+ 
+.moh-filter-btn:hover {
+  opacity: 1;
+  border-color: rgba(255,255,255,0.4);
+}
+ 
+.moh-filter-btn.active {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.4);
+  opacity: 1;
+}
+ 
+/* Status bar */
+.moh-status {
+  font-size: 0.82rem;
+  opacity: 0.5;
+  margin-bottom: 1.25rem;
+  min-height: 1.2em;
+}
+ 
+/* Loading state */
+.moh-loading {
+  text-align: center;
+  padding: 3rem 0;
+  opacity: 0.5;
+}
+ 
+.moh-loading-bar {
+  width: 180px;
+  height: 2px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  margin: 1rem auto 0;
+  overflow: hidden;
+}
+ 
+.moh-loading-bar::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 40%;
+  background: rgba(255,255,255,0.5);
+  border-radius: 2px;
+  animation: moh-sweep 1.2s ease-in-out infinite;
+}
+ 
+@keyframes moh-sweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+ 
+/* Results grid */
+.moh-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+ 
+/* Recipient card (search results — scoped to beat existing .moh-card rules) */
+#moh-results .moh-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 1.25rem;
+  transition: background 0.15s, border-color 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  opacity: 1;
+  animation: none;
+}
+
+#moh-results .moh-card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.15);
+}
+ 
+.moh-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+ 
+.moh-card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  flex: 1;
+}
+ 
+.moh-badge {
+  font-size: 0.68rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+ 
+.moh-badge-posthumous {
+  background: rgba(180, 60, 60, 0.25);
+  border: 1px solid rgba(180, 60, 60, 0.4);
+  color: #e88;
+}
+ 
+.moh-badge-living {
+  background: rgba(60, 140, 80, 0.2);
+  border: 1px solid rgba(60, 140, 80, 0.35);
+  color: #8d8;
+}
+ 
+.moh-card-meta {
+  font-size: 0.82rem;
+  opacity: 0.55;
+  line-height: 1.5;
+}
+ 
+.moh-card-conflict {
+  display: inline-block;
+  font-size: 0.75rem;
+  opacity: 0.7;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
+  padding: 0.1rem 0.45rem;
+  margin-bottom: 0.25rem;
+}
+ 
+.moh-card-citation {
+  font-size: 0.8rem;
+  opacity: 0.5;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+ 
+/* Load more */
+.moh-load-more {
+  text-align: center;
+  margin-top: 2rem;
+}
+ 
+.moh-load-more button {
+  padding: 0.65rem 2rem;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  color: inherit;
+  font-size: 0.88rem;
+  font-family: inherit;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.15s;
+}
+ 
+.moh-load-more button:hover {
+  opacity: 1;
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.05);
+}
+ 
+/* Empty state */
+.moh-empty {
+  text-align: center;
+  padding: 3rem 0;
+  opacity: 0.45;
+}
+ 
+.moh-empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+ 
+/* Responsive */
+@media (max-width: 600px) {
+  .moh-results {
+    grid-template-columns: 1fr;
+  }
+  .moh-filters {
+    gap: 0.35rem;
+  }
+  .moh-filter-btn {
+    font-size: 0.78rem;
+    padding: 0.35rem 0.75rem;
+  }
+}
 /* Critical above-fold CSS — inlined for instant render */
 body{background:#0b1120;color:#f5f2ea;}
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;}
@@ -842,9 +1115,6 @@ html{overflow-x:hidden;}
   .tab-section{padding:48px 20px 60px;}
 }
 
-  .deepdive-facts{grid-template-columns:repeat(2,1fr);}
-  .tab-section{padding:48px 20px 60px;}
-}
 
 /* ══ SUBMIT FORM ══ */
 .submit-form{margin-top:8px;}
@@ -1177,7 +1447,6 @@ select.submit-input option{background:var(--navy2);color:var(--white);}
   .deepdive-facts{grid-template-columns:repeat(2,1fr);}
   .tab-section{padding:48px 20px 60px;}
 }
-.table-scroll-hint{
 .table-scroll-hint{
   display:none;
   text-align:center;
@@ -1551,18 +1820,42 @@ select.submit-input option{background:var(--navy2);color:var(--white);}
 
     <div class="stories-subhead-wrap" style="margin-top:64px;">
       <h3 class="stories-subhead">Medal of Honor recipients</h3>
-      <p class="stories-subhead-desc">The nation's highest military honor, awarded for conspicuous gallantry above and beyond the call of duty.</p>
+      <p class="stories-subhead-desc">Search all 3,487 recipients by name, state, unit, or any word from their citation.</p>
     </div>
-    <div class="toggle-tabs" id="mohFilter" style="margin-bottom:28px;">
-      <button class="toggle-tab active" onclick="filterMoH('all',this)">All wars</button>
-      <button class="toggle-tab" onclick="filterMoH('Civil War',this)">Civil War</button>
-      <button class="toggle-tab" onclick="filterMoH('WWI',this)">WWI</button>
-      <button class="toggle-tab" onclick="filterMoH('WWII',this)">WWII</button>
-      <button class="toggle-tab" onclick="filterMoH('Korea',this)">Korea</button>
-      <button class="toggle-tab" onclick="filterMoH('Vietnam',this)">Vietnam</button>
-      <button class="toggle-tab" onclick="filterMoH('Afghanistan',this)">Iraq & Afghan</button>
+
+    <div class="moh-search-box">
+      <svg class="moh-search-icon" width="18" height="18" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="search" id="moh-query"
+        placeholder="Search by name, state, unit, or any word from a citation…"
+        autocomplete="off" spellcheck="false"/>
     </div>
-    <div id="mohGrid" class="moh-grid"></div>
+
+    <div class="moh-filters" id="moh-filters">
+      <button class="moh-filter-btn active" data-conflict="">All wars</button>
+      <button class="moh-filter-btn" data-conflict="U.S. Civil War">Civil War</button>
+      <button class="moh-filter-btn" data-conflict="World War I">WWI</button>
+      <button class="moh-filter-btn" data-conflict="World War II">WWII</button>
+      <button class="moh-filter-btn" data-conflict="Korean War">Korea</button>
+      <button class="moh-filter-btn" data-conflict="Vietnam War">Vietnam</button>
+      <button class="moh-filter-btn" data-conflict="War on Terrorism">Iraq & Afghan</button>
+      <button class="moh-filter-btn" data-conflict="Indian Campaigns">Indian Campaigns</button>
+    </div>
+
+    <div class="moh-status" id="moh-status">Loading recipient data…</div>
+
+    <div id="moh-loading" class="moh-loading">
+      <div>Building search index…</div>
+      <div class="moh-loading-bar"></div>
+    </div>
+
+    <div class="moh-results" id="moh-results" style="display:none"></div>
+
+    <div class="moh-load-more" id="moh-load-more" style="display:none">
+      <button id="moh-more-btn">Load more recipients</button>
+    </div>
 
     <div class="stories-subhead-wrap" style="margin-top:64px;">
       <h3 class="stories-subhead">Personal stories</h3>
@@ -2652,31 +2945,6 @@ async function buildStories(){
     unitGrid.appendChild(card);
   });
 
-  // Render MoH grid
-  const mohGrid = document.getElementById('mohGrid');
-  mohStoriesData.forEach((m, i)=>{
-    const card = document.createElement('div');
-    card.className = 'moh-card';
-    card.dataset.war = m.warKey;
-    card.style.animationDelay = (i*60)+'ms';
-    const badgeClass = warBadgeClass(m.warKey);
-    const photoHtml = mohImgs[i]
-      ? `<img class="moh-photo" src="${mohImgs[i]}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<span>★</span>'">`
-      : `<span>★</span>`;
-    card.innerHTML = `
-      <div class="moh-photo-wrap">${photoHtml}</div>
-      <div style="text-align:center;margin-bottom:12px;">
-        <span class="moh-war-badge ${badgeClass}">${m.war}</span>
-      </div>
-      <div class="moh-name">${m.name}</div>
-      <div class="moh-rank">${m.rank}</div>
-      <div class="moh-date">${m.date}</div>
-      <div class="moh-summary">${m.summary}</div>
-      <div class="moh-location">${m.location}</div>
-    `;
-    mohGrid.appendChild(card);
-  });
-
   // Render personal stories
   const personalGrid = document.getElementById('personalStoriesGrid');
   personalStoriesData.forEach((s, i)=>{
@@ -3015,6 +3283,231 @@ async function init(){
   })();
 
 init();
+</script>
+
+<script src="https://unpkg.com/lunr/lunr.js"></script>
+<script>
+(function () {
+  const PAGE_SIZE = 24;
+ 
+  let allRecipients = [];   // full dataset
+  let lunrIndex    = null;  // search index
+  let activeFilter = '';    // active conflict filter
+  let currentQuery = '';    // current search text
+  let visibleCount = PAGE_SIZE;
+ 
+  // ── DOM refs ──────────────────────────────────────────
+  const queryInput  = document.getElementById('moh-query');
+  const statusEl    = document.getElementById('moh-status');
+  const loadingEl   = document.getElementById('moh-loading');
+  const resultsEl   = document.getElementById('moh-results');
+  const loadMoreEl  = document.getElementById('moh-load-more');
+  const moreBtn     = document.getElementById('moh-more-btn');
+  const filterBtns  = document.querySelectorAll('#moh-filters .moh-filter-btn');
+ 
+  // ── Bootstrap ─────────────────────────────────────────
+  fetch('/moh_recipients.json')
+    .then(r => r.json())
+    .then(data => {
+      allRecipients = data.recipients || [];
+      buildIndex(allRecipients);
+    })
+    .catch(() => {
+      statusEl.textContent = 'Could not load recipient data.';
+      loadingEl.style.display = 'none';
+    });
+ 
+  function buildIndex(recipients) {
+    // Run index build async so the browser doesn't freeze
+    setTimeout(() => {
+      lunrIndex = lunr(function () {
+        this.ref('id');
+        this.field('name',         { boost: 10 });
+        this.field('rank',         { boost: 3  });
+        this.field('branch',       { boost: 3  });
+        this.field('conflict',     { boost: 4  });
+        this.field('home_state',   { boost: 4  });
+        this.field('action_place', { boost: 2  });
+        this.field('unit',         { boost: 2  });
+        this.field('citation',     { boost: 1  });
+ 
+        // Disable stemming on name so "Smith" doesn't match "Smithson"
+        this.pipeline.remove(lunr.stemmer);
+        this.searchPipeline.remove(lunr.stemmer);
+ 
+        recipients.forEach(r => {
+          this.add({
+            id:           r.id,
+            name:         r.name         || '',
+            rank:         r.rank         || '',
+            branch:       r.branch       || '',
+            conflict:     r.conflict     || '',
+            home_state:   r.home_state   || '',
+            action_place: r.action_place || '',
+            unit:         r.unit         || '',
+            citation:     (r.citation    || '').slice(0, 800),
+          });
+        });
+      });
+ 
+      loadingEl.style.display = 'none';
+      resultsEl.style.display = 'grid';
+      render();
+    }, 0);
+  }
+ 
+  // ── Search & filter logic ─────────────────────────────
+ 
+  function getResults() {
+    if (!lunrIndex) return [];
+ 
+    let ids;
+ 
+    if (currentQuery.trim()) {
+      try {
+        // Try wildcard search so partial names work
+        const q = currentQuery.trim().split(/\s+/)
+          .map(t => `${t}*`)
+          .join(' ');
+        ids = lunrIndex.search(q).map(r => r.ref);
+      } catch (_) {
+        // Malformed query — search without wildcards
+        try {
+          ids = lunrIndex.search(currentQuery.trim()).map(r => r.ref);
+        } catch (_2) {
+          ids = [];
+        }
+      }
+    } else {
+      // No query — use all recipients in original order
+      ids = allRecipients.map(r => r.id);
+    }
+ 
+    // Build lookup map
+    const byId = Object.fromEntries(allRecipients.map(r => [r.id, r]));
+ 
+    // Apply conflict filter
+    let filtered = ids
+      .map(id => byId[id])
+      .filter(Boolean);
+ 
+    if (activeFilter) {
+      filtered = filtered.filter(r => r.conflict === activeFilter);
+    }
+ 
+    return filtered;
+  }
+ 
+  function render() {
+    const results = getResults();
+    const total   = results.length;
+    const slice   = results.slice(0, visibleCount);
+ 
+    // Status
+    if (currentQuery || activeFilter) {
+      statusEl.textContent = total === 0
+        ? 'No recipients found'
+        : `${total.toLocaleString()} recipient${total !== 1 ? 's' : ''} found`;
+    } else {
+      statusEl.textContent =
+        `${allRecipients.length.toLocaleString()} recipients — type to search`;
+    }
+ 
+    // Cards
+    resultsEl.innerHTML = slice.length === 0
+      ? `<div class="moh-empty" style="grid-column:1/-1">
+           <div class="moh-empty-icon">🎖️</div>
+           <div>No recipients match your search.</div>
+           <div style="font-size:0.8rem;margin-top:0.4rem;opacity:0.6">
+             Try a name, state, unit, or a word from a citation
+           </div>
+         </div>`
+      : slice.map(cardHTML).join('');
+ 
+    // Load more
+    if (total > visibleCount) {
+      loadMoreEl.style.display = 'block';
+      moreBtn.textContent =
+        `Load more — showing ${visibleCount} of ${total.toLocaleString()}`;
+    } else {
+      loadMoreEl.style.display = 'none';
+    }
+  }
+ 
+  function cardHTML(r) {
+    const badge = r.posthumous
+      ? `<span class="moh-badge moh-badge-posthumous">Posthumous</span>`
+      : '';
+ 
+    const meta = [r.rank, r.branch].filter(Boolean).join(' · ');
+    const place = r.action_place
+      ? `<div style="font-size:0.78rem;opacity:0.45;margin-top:0.2rem">📍 ${esc(r.action_place)}</div>`
+      : '';
+    const state = r.home_state
+      ? `<span style="opacity:0.5"> · ${esc(r.home_state)}</span>`
+      : '';
+ 
+    const citation = r.citation
+      ? `<div class="moh-card-citation">${esc(r.citation)}</div>`
+      : '';
+ 
+    return `
+      <div class="moh-card">
+        <div class="moh-card-top">
+          <div class="moh-card-name">${esc(r.name)}</div>
+          ${badge}
+        </div>
+        ${r.conflict
+          ? `<span class="moh-card-conflict">${esc(r.conflict)}</span>`
+          : ''}
+        <div class="moh-card-meta">${esc(meta)}${state}</div>
+        ${place}
+        ${citation}
+      </div>`;
+  }
+ 
+  function esc(str) {
+    return (str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+ 
+  // ── Event listeners ───────────────────────────────────
+ 
+  let debounceTimer;
+  queryInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      currentQuery = queryInput.value;
+      visibleCount = PAGE_SIZE;
+      render();
+    }, 280);
+  });
+ 
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.conflict;
+      visibleCount = PAGE_SIZE;
+      render();
+    });
+  });
+ 
+  moreBtn.addEventListener('click', () => {
+    visibleCount += PAGE_SIZE;
+    render();
+    // Smooth scroll to new cards
+    const cards = resultsEl.querySelectorAll('.moh-card');
+    if (cards[visibleCount - PAGE_SIZE]) {
+      cards[visibleCount - PAGE_SIZE]
+        .scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+ 
+})();
 </script>
 
 </body>
