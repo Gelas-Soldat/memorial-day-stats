@@ -286,6 +286,27 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.moh-card-citation.expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+.moh-expand-btn {
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0.3rem 0 0;
+  opacity: 0.65;
+  transition: opacity 0.15s;
+  display: block;
+}
+
+.moh-expand-btn:hover { opacity: 1; }
  
 /* Load more */
 .moh-load-more {
@@ -3448,7 +3469,8 @@ init();
       : '';
  
     const citation = r.citation
-      ? `<div class="moh-card-citation">${esc(r.citation)}</div>`
+      ? `<div class="moh-card-citation">${esc(r.citation)}</div>
+         <button class="moh-expand-btn">Read citation ↓</button>`
       : '';
  
     return `
@@ -3505,6 +3527,14 @@ init();
       cards[visibleCount - PAGE_SIZE]
         .scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  });
+
+  resultsEl.addEventListener('click', e => {
+    const btn = e.target.closest('.moh-expand-btn');
+    if (!btn) return;
+    const citation = btn.previousElementSibling;
+    const expanded = citation.classList.toggle('expanded');
+    btn.textContent = expanded ? 'Collapse ↑' : 'Read citation ↓';
   });
  
 })();
