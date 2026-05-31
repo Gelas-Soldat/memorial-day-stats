@@ -1,0 +1,47 @@
+name: Update MoH Recipients
+
+on:
+  # Run on the 1st of every month at 8am UTC
+  # MoH awards are rare — monthly is plenty
+  schedule:
+    - cron: '0 8 1 * *'
+
+  # Allow manual trigger from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120   # first run takes ~1hr for 3,500 records
+
+    permissions:
+      contents: write      # needed to commit moh_recipients.json back
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 lxml
+
+      - name: Run scraper
+        run: python scripts/scrape_moh.py
+
+      - name: Commit if data changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          if git diff --quiet moh_recipients.json; then
+            echo "No changes to moh_recipients.json — skipping commit"
+          else
+            COUNT=$(python -c "import json; d=json.load(open('moh_recipients.json')); print(d['meta']['total'])")
+            git add moh_recipients.json
+            git commit -m "Update MoH recipients: $COUNT records ($(date +%Y-%m-%d))"
+            git push
+          fi
